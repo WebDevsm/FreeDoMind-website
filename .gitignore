@@ -1,0 +1,16 @@
+node_modules/
+temporary screenshots/
+.DS_Store
+.claude/
+
+# Reference/working files not used by the site
+FreeDoMind Web Design Information.file.pdf
+ChatGPT Image Mar 28, 2026, 04_24_08 PM.png
+ChatGPT Image Mar 29, 2026, 06_27_23 PM.png
+Induction.jpeg
+freedomind logo without m.png
+freedomind logo without m Background Removed.png
+
+# Brand reference materials (not used by site)
+brand_assets/Freedomind_brand_assets*/
+brand_assets/freedomind website screenshots/
