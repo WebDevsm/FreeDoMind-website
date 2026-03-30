@@ -1,0 +1,317 @@
+/* Page 404, Search
+---------------------------------------------- */
+.search-no-results .page_content_wrap,
+.error404 .page_content_wrap {
+  background-color: var(--theme-color-bg_color);
+}
+
+/* Default header layouts
+---------------------------------------------- */
+/* Menu hovers */
+.menu_hover_zoom_line .sc_layouts_menu_nav > li > a:hover,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.sfHover > a,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-item > a,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-parent > a,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-ancestor > a {
+  color: var(--theme-color-text_link2) !important;
+}
+
+.menu_hover_zoom_line .sc_layouts_menu_nav > li > a:hover:after,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.sfHover > a:after,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-item > a:after,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-parent > a:after,
+.menu_hover_zoom_line .sc_layouts_menu_nav > li.current-menu-ancestor > a:after {
+  background-color: var(--theme-color-text_link2);
+}
+
+.menu_mobile .menu_mobile_widgets_area {
+  background-color: var(--theme-color-text_link3);
+}
+
+/* Custom layouts
+---------------------------------------------- */
+/* Header fixed positions */
+.sc_layouts_row_fixed_on {
+  -webkit-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  -ms-box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+  background-color: var(--theme-color-alter_bg_color) !important;
+}
+
+.sc_layouts_row_fixed_on .search_style_fullscreen.search_opened .search_close {
+  top: 35px;
+  right: -40px;
+}
+
+/* User styles
+---------------------------------------------- */
+/* Dot & Success */
+ul[class*="trx_addons_list_dot"],
+ul[class*="trx_addons_list_success"] {
+  color: var(--theme-color-text_dark);
+}
+
+/* Blockquotes
+---------------------------------------------- */
+blockquote p {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 400;
+}
+
+/* Tables */
+table td {
+  font-size: 15px;
+  letter-spacing: -0.15px;
+}
+
+/* Buttons
+---------------------------------------------- */
+.sc_button.sc_button.sc_button_simple.sc_button_with_icon.button_bg_icon_color_2 .sc_button_icon {
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+}
+
+.sc_button.sc_button.sc_button_simple.sc_button_with_icon.button_bg_icon_color_2 .sc_button_icon span {
+  line-height: 31px;
+}
+
+.button_bg_icon_color_2 .sc_button_icon {
+  background-color: var(--theme-color-alter_bg_color);
+  border: 4px solid rgba(234, 234, 234, 0.8) !important;
+}
+
+/* Icons 
+---------------------------------------------- */
+/* Style 'Bordered' */
+.sc_icons_bordered .sc_icons_icon,
+.sc_icons_bordered .sc_icons_image {
+  border: 1px solid var(--theme-color-bd_color_07);
+  background-color: var(--theme-color-bg_color_07);
+  -webkit-border-radius: 0;
+  -ms-border-radius: 0;
+  border-radius: 0;
+}
+
+.sc_icons_decoration .sc_icons_item:hover
+.sc_icons_item_more_link .link_icon:before,
+.sc_icons_decoration .sc_icons_item .sc_icons_item_more_link:hover .link_icon:before {
+  color: var(--theme-color-text_dark);
+}
+
+/* Services 
+---------------------------------------------- */
+/* Strong style */
+.sc_services_strong .sc_services_item_content .sc_services_item_content_inner:before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+/* Contact Form
+---------------------------------------------- */
+div.wpcf7 .form-style-3 .wpcf7-submit-style .submit-style-in {
+  color: var(--theme-color-inverse_link);
+  background-color: var(--theme-color-text_link2);
+}
+
+div.wpcf7 .form-style-3 .wpcf7-submit-style .submit-style-in:hover {
+  color: var(--theme-color-inverse_link);
+  background-color: var(--theme-color-text_hover2);
+}
+
+/* Testimonials
+---------------------------------------------- */
+.sc_testimonials .sc_testimonials_item:before,
+.sc_testimonials .sc_testimonials_item_content:before {
+  color: var(--theme-color-text_link);
+}
+
+.sc_testimonials_alter [class*="column"] .sc_testimonials_item_author:before,
+.sc_testimonials_alter .sc_testimonials_item_author:before {
+  content: '\E9A1';
+}
+
+/* Slider Pagination
+---------------------------------------------- */
+.swiper-pagination-custom .swiper-pagination-button.swiper-pagination-button-active,
+.sc_slider_controls.slider_pagination_style_bullets .slider_pagination_bullet.swiper-pagination-bullet-active,
+.sc_slider_controls.slider_pagination_style_bullets .slider_pagination_bullet:hover,
+.slider_container .slider_pagination_wrap .swiper-pagination-bullet.swiper-pagination-bullet-active,
+.slider_outer .slider_pagination_wrap .swiper-pagination-bullet.swiper-pagination-bullet-active,
+.slider_container .slider_pagination_wrap .swiper-pagination-bullet:hover,
+.slider_outer .slider_pagination_wrap .swiper-pagination-bullet:hover {
+  border-color: var(--theme-color-text_link);
+  background-color: var(--theme-color-text_link);
+}
+
+/* Portfolio
+---------------------------------------------- */
+.sc_blogger_lay_portfolio_grid.sc_blogger_lay_portfolio_grid_grid_style_13 .sc_blogger_item .sc_blogger_item_body .post_featured .post_info_bl {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: var(--theme-color-text_link);
+}
+
+.sc_blogger_lay_portfolio_grid.sc_blogger_lay_portfolio_grid_grid_style_13 .sc_blogger_item .sc_blogger_item_body .post_featured .post_info_bl .sc_blogger_item_title a,
+.sc_blogger_lay_portfolio_grid.sc_blogger_lay_portfolio_grid_grid_style_13 .sc_blogger_item .sc_blogger_item_body .post_featured .post_info_bl .post_meta .post_meta_item a {
+  color: var(--theme-color-inverse_link) !important;
+}
+
+/* Blogger
+---------------------------------------------- */
+.sc_blogger_default.sc_blogger_default_classic_time .sc_blogger_item_default.sc_blogger_item_on_plate.sc_blogger_item_image_position_top .post_meta.sc_blogger_item_meta.post_meta_date {
+  z-index: 999;
+}
+
+/* Tabs 
+---------------------------------------------- */
+/* Tabs Style 1 */
+.tabs_style_1.elementor-widget-tabs .elementor-tab-title {
+  font-weight: 500;
+}
+
+.tabs_style_1.elementor-widget-tabs .elementor-tab-title.elementor-active a {
+  color: var(--theme-color-text_dark);
+}
+
+.tabs_style_1.elementor-widget-tabs .elementor-tab-title a {
+  color: var(--theme-color-text_dark_07);
+}
+
+.widget .trx_addons_tabs .trx_addons_tabs_titles li a {
+  border-radius: 0;
+}
+
+.alter_clients .widget_slider .slider_container .slider-slide img {
+  opacity: 0.5;
+}
+
+/* Title
+---------------------------------------------- */
+h1.sc_item_title .sc_item_title_text b {
+  display: inline-block;
+  position: relative;
+}
+
+h1.sc_item_title .sc_item_title_text b:before {
+  content: '';
+  height: 18px;
+  width: 100%;
+  background-image: url(images/line.svg);
+  background-size: cover;
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  bottom: -11px;
+  left: 0;
+}
+
+/* Booked
+---------------------------------------------- */
+body .booked-calendar-wrap.small table.booked-calendar tbody tr td.today .date,
+body div.booked-calendar-wrap div.booked-calendar .bc-body .bc-row.week div.bc-col.today.prev-date .date,
+body div.booked-calendar-wrap div.booked-calendar .bc-body .bc-row.week div.bc-col.today .date {
+  background-color: var(--theme-color-text_link2) !important;
+}
+
+body .booked-calendar-wrap.small table.booked-calendar tbody tr td:not(.prev-date):hover .date {
+  color: var(--theme-color-inverse_link) !important;
+  background-color: var(--theme-color-alter_dark) !important;
+}
+
+body .booked-calendar-wrap.small table.booked-calendar td .date,
+body .booked-calendar-wrap.small table.booked-calendar .date span {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+
+body .booked-calendar-wrap.small .booked-appt-list,
+body div.booked-calendar-wrap.small .booked-appt-list {
+  max-height: 180px;
+}
+
+body #booked-profile-page .appt-block .booked-cal-buttons .google-cal-button.addeventatc,
+body #booked-profile-page .booked-profile-appt-list .appt-block .booked-cal-buttons a,
+body #booked-profile-page .booked-profile-appt-list .appt-block .booked-fea-buttons > a.delete,
+body #booked-profile-page .booked-profile-appt-list .appt-block .booked-fea-buttons > button.delete,
+body #booked-profile-page .booked-profile-appt-list .appt-block .status-block {
+  border-radius: 0;
+}
+
+/* Woocommerce
+---------------------------------------------- */
+.sc_layouts_cart_panel .sc_layouts_cart_items_short {
+  font-size: 10px;
+  font-weight: 500;
+  min-width: 15px;
+  min-height: 15px;
+  line-height: 15px;
+  text-align: center;
+  text-indent: -1px;
+  padding: 0 2px;
+  -webkit-transform: none;
+  -ms-transform: none;
+  transform: none;
+}
+
+/* Blog standard
+---------------------------------------------- */
+.post_format-post-format-gallery .post_featured.hover_link img {
+  transform: none;
+  top: 1px;
+}
+
+@media (max-width: 1439px) {
+  /* Booked */
+  body .booked-calendar-wrap.small .booked-calendar .booked-appt-list .timeslot .timeslot-people button,
+  body div.booked-calendar-wrap .booked-appt-list .timeslot .timeslot-people button {
+    padding: 12px 25px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .menu_mobile .sc_layouts_logo img {
+    max-height: 30px;
+  }
+  .search-no-results .body_wrap, .error404 .body_wrap {
+    background-size: 37%;
+  }
+}
+
+@media (max-width: 767px) {
+  .menu_mobile .sc_layouts_logo img,
+  .search_modern .search_header_wrap .logo_image,
+  .sc_layouts_row.sc_layouts_row_fixed_on.sc_layouts_row_fixed_always .custom-logo-link img,
+  .sc_layouts_row.sc_layouts_row_fixed_on.sc_layouts_row_fixed_always .sc_layouts_logo img {
+    max-height: 25px;
+  }
+  blockquote p {
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+  .post_item_404 .page_description {
+    font-size: 16px;
+  }
+  .search-no-results .body_wrap, .error404 .body_wrap {
+    background-size: 58%;
+  }
+  .sc_button.sc_button.sc_button_simple.sc_button_with_icon.button_bg_icon_color_2 .sc_button_icon {
+    width: 51px;
+    height: 51px;
+    line-height: 51px;
+  }
+  .sc_button.sc_button.sc_button_simple.sc_button_with_icon.button_bg_icon_color_2 .sc_button_icon span {
+    line-height: 25px;
+  }
+}
+
+/*# sourceMappingURL=skin-upgrade-style.css.map */
