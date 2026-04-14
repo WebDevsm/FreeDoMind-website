@@ -18,6 +18,9 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <!-- Three.js for 3D hero logo (UMD build so it works alongside non-module scripts) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/SVGLoader.js" defer></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -75,7 +78,7 @@
       left: 2rem;
       right: 2rem;
       z-index: 500;
-      padding: 0.45rem 2.5rem;
+      padding: 0.9rem 2.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -124,8 +127,9 @@
       align-items: center;
       gap: 2.5rem;
       position: absolute;
+      top: 50%;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -50%);
       background: rgba(91, 12, 23, 0.2);
       border-radius: 10px;
       padding: 0.4rem 1.25rem;
@@ -529,6 +533,21 @@
       object-fit: contain;
       display: block;
     }
+    /* 3D canvas spans the whole sticky stage so the mesh can swing freely without clipping.
+       Sits above backgrounds/meshes but below the stage rail, scroll cue and overlay panels. */
+    .fm-3d-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .fm-cinema-stage.is-3d-ready .fm-3d-layer { opacity: 1; }
+    /* Hide the flat PNG wrapper on desktop once the mesh is live; it stays for mobile fallback. */
+    .fm-cinema-stage.is-3d-ready .fm-logo-stage { display: none; }
     .fm-logo-wings { z-index: 1; }
     .fm-logo-full  { z-index: 2; }
 
@@ -2047,10 +2066,6 @@
       .nav { left: 1rem; right: 1rem; padding: 0.4rem 1rem; }
       .nav-brand { gap: 8px; }
       .nav-brand img { height: 40px !important; }
-      .nav-brand > span { font-size: 0.78rem !important; letter-spacing: 0.16em !important; }
-    }
-    @media (max-width: 420px) {
-      .nav-brand > span { display: none; }
     }
 
     /* ══════════════════════════════════════════════════
@@ -2096,6 +2111,9 @@
       position: absolute;
       inset: 0;
       z-index: 2;
+      perspective: 1200px;
+      perspective-origin: 50% 50%;
+      transform-style: preserve-3d;
     }
     /* Shared word base */
     .intro-life,
@@ -2108,6 +2126,8 @@
       padding: 0 2rem;
       opacity: 0;
       will-change: transform, opacity;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
     }
     .intro-life {
       font-family: 'Times New Roman', Times, serif;
@@ -2118,7 +2138,7 @@
       text-transform: uppercase;
       color: var(--bordeaux);
       line-height: 1;
-      animation: introLife 2.5s cubic-bezier(0.16,1,0.3,1) infinite;
+      animation: introLife 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     .intro-mindset {
       font-family: 'Times New Roman', Times, serif;
@@ -2129,7 +2149,7 @@
       text-transform: uppercase;
       color: var(--bordeaux);
       line-height: 1;
-      animation: introMindset 2.5s cubic-bezier(0.16,1,0.3,1) infinite;
+      animation: introMindset 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     .intro-biz {
       font-family: 'Times New Roman', Times, serif;
@@ -2140,7 +2160,7 @@
       text-transform: uppercase;
       color: var(--bordeaux);
       line-height: 1;
-      animation: introBiz 2.5s cubic-bezier(0.16,1,0.3,1) infinite;
+      animation: introBiz 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     /* Christine group */
     .intro-chris-group {
@@ -2154,7 +2174,9 @@
       padding: 2rem 2rem 3rem;
       gap: 0.35rem;
       opacity: 0;
-      animation: introChrisGroup 2.5s cubic-bezier(0.16,1,0.3,1) infinite;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+      animation: introChrisGroup 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     .intro-christine {
       display: block;
@@ -2165,13 +2187,13 @@
       line-height: 1.6;
       padding: 0 1rem;
       clip-path: inset(0 100% 0 0);
-      animation: introChristineWipe 2.5s cubic-bezier(0.38,0,0.16,1) infinite;
+      animation: introChristineWipe 3s cubic-bezier(0.38,0,0.16,1) infinite;
     }
     .intro-chris-line {
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(91,12,23,0.65), rgba(91,12,23,0.65), transparent);
       width: 0;
-      animation: introChrisLine 2.5s cubic-bezier(0.16,1,0.3,1) infinite;
+      animation: introChrisLine 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     /* Skip hint */
     .intro-skip {
@@ -2191,38 +2213,40 @@
       animation: introSkipFade 0.8s ease 1.2s both;
     }
 
-    /* ── Keyframes ─────────────────────────────
-       LIFE:            0 – 25%  (0 – 1.25 s)
-       MINDSET:        25 – 50%  (1.25 – 2.5 s)
-       BUSINESS COACH: 50 – 75%  (2.5 – 3.75 s)
-       CHRISTINE:      75 – 100% (3.75 – 5 s)
+    /* ── Keyframes (3s cycle, 3D parallax)────────
+       LIFE:            0 – 25%  (0 – 0.75 s)
+       MINDSET:        25 – 50%  (0.75 – 1.5 s)
+       BUSINESS COACH: 50 – 75%  (1.5 – 2.25 s)
+       CHRISTINE:      75 – 100% (2.25 – 3 s)
+       Each word enters from -400px Z with backward tilt,
+       settles to center, then exits forward with forward tilt.
        ──────────────────────────────────────── */
     @keyframes introLife {
-      0%          { opacity: 0; transform: translateY(calc(-50% + 28px)); }
-      3%          { opacity: 1; transform: translateY(-50%); }
-      20%         { opacity: 1; transform: translateY(-50%); }
-      24%         { opacity: 0; transform: translateY(calc(-50% - 20px)); }
-      25%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)); }
+      0%          { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      5%          { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      20%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      24%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
+      25%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
     @keyframes introMindset {
-      0%, 25%     { opacity: 0; transform: translateY(calc(-50% + 28px)); }
-      28%         { opacity: 1; transform: translateY(-50%); }
-      45%         { opacity: 1; transform: translateY(-50%); }
-      49%         { opacity: 0; transform: translateY(calc(-50% - 20px)); }
-      50%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)); }
+      0%, 25%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      30%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      45%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      49%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
+      50%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
     @keyframes introBiz {
-      0%, 50%     { opacity: 0; transform: translateY(calc(-50% + 28px)); }
-      53%         { opacity: 1; transform: translateY(-50%); }
-      70%         { opacity: 1; transform: translateY(-50%); }
-      74%         { opacity: 0; transform: translateY(calc(-50% - 20px)); }
-      75%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)); }
+      0%, 50%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      55%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      70%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      74%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
+      75%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
     @keyframes introChrisGroup {
-      0%, 74%  { opacity: 0; }
-      78%      { opacity: 1; }
-      97%      { opacity: 1; }
-      100%     { opacity: 0; }
+      0%, 74%  { opacity: 0; transform: translateY(-50%) translateZ(-300px) rotateX(-12deg); }
+      80%      { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      97%      { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      100%     { opacity: 0; transform: translateY(-50%) translateZ(-300px) rotateX(-12deg); }
     }
     @keyframes introChristineWipe {
       0%, 75%  { clip-path: inset(0 100% 0 0); }
@@ -2253,7 +2277,7 @@
       <span class="intro-mindset">MINDSET</span>
       <span class="intro-biz">BUSINESS COACH</span>
       <div class="intro-chris-group">
-        <span class="intro-christine">Christina</span>
+        <span class="intro-christine">Christine</span>
         <div class="intro-chris-line"></div>
       </div>
     </div>
@@ -2265,8 +2289,7 @@
   <!-- ══════ NAVIGATION ══════ -->
   <nav class="nav nav-photo-hero" id="main-nav">
     <a class="nav-brand" onclick="showPage('home')">
-      <img src="brand_assets/freedomind logo without m Background Removed.png" alt="Freedomind Logo" style="height:90px;width:auto;object-fit:contain;display:block;">
-      <span style="font-family:Jost, sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:0.22em;color:#fff;text-transform:uppercase;line-height:1;">FREEDOMIND</span>
+      <img src="brand_assets/freedomind-nav-logo.svg" alt="Freedomind — Soulful. Strong. Strategic." style="height:76px;width:auto;object-fit:contain;display:block;">
     </a>
 
     <div class="nav-links">
@@ -2395,9 +2418,12 @@
           </div>
         </div>
 
-        <!-- Hero logo: full brand PNG. At stage 3 it drops + fades as the narrative climax. -->
+        <!-- Full-stage 3D canvas (desktop). Sibling of the PNG wrapper so it can render edge-to-edge. -->
+        <canvas class="fm-3d-layer" id="fm-3d-canvas" aria-label="Freedomind logo 3D"></canvas>
+
+        <!-- PNG wrapper: stays for mobile fallback. Hidden on desktop once 3D is ready. -->
         <div class="fm-logo-stage" id="fm-logo">
-          <img class="fm-logo-full" id="fm-letter-m" src="brand_assets/freedomind-logo.png" alt="Freedomind">
+          <img class="fm-logo-full" id="fm-letter-m" src="brand_assets/freedomind-logo.png" alt="Freedomind" data-mobile-only>
         </div>
 
         <!-- Panel 0: Brand intro -->
@@ -2592,7 +2618,7 @@
             <div class="pillar-num">03</div>
             <div class="pillar-content">
               <h3 class="pillar-title">Speaking</h3>
-              <p class="pillar-body">Christina brings an electrifying, heart-centred approach to the stage, igniting audiences with practical tools and transformational insights to live and lead with true freedom and purpose.</p>
+              <p class="pillar-body">Christine brings an electrifying, heart-centred approach to the stage, igniting audiences with practical tools and transformational insights to live and lead with true freedom and purpose.</p>
             </div>
           </div>
         </div>
@@ -2693,21 +2719,21 @@
             <div class="tscroll-track" style="--tdur:20s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever."</p>
+                <p class="tscroll-card-text">"Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Christina's approach is unlike anything I've experienced before. She doesn't just coach, she truly sees you, challenges you, and believes in your potential even when you don't. My life and business have transformed completely."</p>
+                <p class="tscroll-card-text">"Christine's approach is unlike anything I've experienced before. She doesn't just coach, she truly sees you, challenges you, and believes in your potential even when you don't. My life and business have transformed completely."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation."</p>
+                <p class="tscroll-card-text">"The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -2715,21 +2741,21 @@
               </div>
               <!-- set 2 (duplicate for seamless loop) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever."</p>
+                <p class="tscroll-card-text">"Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Christina's approach is unlike anything I've experienced before. She doesn't just coach, she truly sees you, challenges you, and believes in your potential even when you don't. My life and business have transformed completely."</p>
+                <p class="tscroll-card-text">"Christine's approach is unlike anything I've experienced before. She doesn't just coach, she truly sees you, challenges you, and believes in your potential even when you don't. My life and business have transformed completely."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation."</p>
+                <p class="tscroll-card-text">"The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -2793,21 +2819,21 @@
             <div class="tscroll-track" style="--tdur:23s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life."</p>
+                <p class="tscroll-card-text">"I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn't just give you tools, she changes the way you think."</p>
+                <p class="tscroll-card-text">"Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn't just give you tools, she changes the way you think."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching."</p>
+                <p class="tscroll-card-text">"Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -2815,21 +2841,21 @@
               </div>
               <!-- set 2 (duplicate) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life."</p>
+                <p class="tscroll-card-text">"I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn't just give you tools, she changes the way you think."</p>
+                <p class="tscroll-card-text">"Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn't just give you tools, she changes the way you think."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">"Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching."</p>
+                <p class="tscroll-card-text">"Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching."</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -2853,8 +2879,8 @@
       <div class="cta-inner">
         <div class="cta-pre reveal">Get In Touch</div>
         <h2 class="cta-h2 reveal">Ready to unlock<br><em style="font-style:italic;">your potential?</em></h2>
-        <p class="cta-sub reveal">Whether you're looking for one-on-one coaching, a team workshop, or a speaker, Christina would love to connect.</p>
-        <button class="btn-white reveal" onclick="showPage('contact')">Contact Christina</button>
+        <p class="cta-sub reveal">Whether you're looking for one-on-one coaching, a team workshop, or a speaker, Christine would love to connect.</p>
+        <button class="btn-white reveal" onclick="showPage('contact')">Contact Christine</button>
       </div>
     </section>
 
@@ -2974,21 +3000,21 @@
             <div class="tscroll-track" style="--tdur:20s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -2996,21 +3022,21 @@
               </div>
               <!-- set 2 (duplicate for seamless loop) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -3074,21 +3100,21 @@
             <div class="tscroll-track" style="--tdur:23s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3096,21 +3122,21 @@
               </div>
               <!-- set 2 (duplicate) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3253,7 +3279,7 @@
       <div class="cta-inner">
         <div class="cta-pre reveal">Take the First Step</div>
         <h2 class="cta-h2 reveal">Ready to unlock<br><em style="font-style:italic;">your potential?</em></h2>
-        <p class="cta-sub reveal">Book your one-on-one coaching session with Christina today.</p>
+        <p class="cta-sub reveal">Book your one-on-one coaching session with Christine today.</p>
         <button class="btn-white reveal" onclick="showPage('contact')">Book a Session</button>
       </div>
     </section>
@@ -3355,21 +3381,21 @@
             <div class="tscroll-track" style="--tdur:20s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -3377,21 +3403,21 @@
               </div>
               <!-- set 2 (duplicate for seamless loop) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -3455,21 +3481,21 @@
             <div class="tscroll-track" style="--tdur:23s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3477,21 +3503,21 @@
               </div>
               <!-- set 2 (duplicate) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3605,21 +3631,21 @@
             <div class="tscroll-track" style="--tdur:20s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -3627,21 +3653,21 @@
               </div>
               <!-- set 2 (duplicate for seamless loop) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Working with Christina has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
+                <p class="tscroll-card-text">“Working with Christine has been a life-changing experience. She helped me identify and break through the mental blocks that were holding me back in both my personal and professional life. I feel stronger, clearer, and more aligned than ever.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah M.">
                   <div><div class="tscroll-card-name">Sarah M.</div><div class="tscroll-card-role">Life Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
+                <p class="tscroll-card-text">“Christine’s approach is unlike anything I’ve experienced before. She doesn’t just coach, she truly sees you, challenges you, and believes in your potential even when you don’t. My life and business have transformed completely.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="James K.">
                   <div><div class="tscroll-card-name">James K.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“The workshop Christina ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
+                <p class="tscroll-card-text">“The workshop Christine ran for our team was extraordinary. She shifted how we communicate, how we lead, and how we show up for each other. The results have been felt across every level of the organisation.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Rachel T.">
                   <div><div class="tscroll-card-name">Rachel T.</div><div class="tscroll-card-role">Team Leader</div></div>
@@ -3705,21 +3731,21 @@
             <div class="tscroll-track" style="--tdur:23s">
               <!-- set 1 -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3727,21 +3753,21 @@
               </div>
               <!-- set 2 (duplicate) -->
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“I came to Christina stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
+                <p class="tscroll-card-text">“I came to Christine stuck, confused, and completely exhausted. She helped me reconnect with who I truly am and what I really want. Now I show up fully, every single day, in every area of my life.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/28.jpg" alt="Emma R.">
                   <div><div class="tscroll-card-name">Emma R.</div><div class="tscroll-card-role">Coaching Client</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Christina helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
+                <p class="tscroll-card-text">“Christine helped me launch my business with a clarity and confidence I never thought possible. Her mindset work is transformative, she doesn’t just give you tools, she changes the way you think.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/men/76.jpg" alt="Michael O.">
                   <div><div class="tscroll-card-name">Michael O.</div><div class="tscroll-card-role">Entrepreneur</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
-                <p class="tscroll-card-text">“Every session with Christina is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
+                <p class="tscroll-card-text">“Every session with Christine is powerful. She holds space beautifully, challenges you where you need it most, and celebrates your growth every step of the way. Truly exceptional coaching.”</p>
                 <div class="tscroll-card-author">
                   <img class="tscroll-card-avatar" src="https://randomuser.me/api/portraits/women/50.jpg" alt="Sophie L.">
                   <div><div class="tscroll-card-name">Sophie L.</div><div class="tscroll-card-role">Coaching Client</div></div>
@@ -3795,7 +3821,7 @@
           </div>
           <div class="contact-field">
             <label class="contact-label">Subject of Inquiry</label>
-            <input class="contact-input" type="text" placeholder="How can Christina help you?">
+            <input class="contact-input" type="text" placeholder="How can Christine help you?">
           </div>
           <div class="contact-field">
             <label class="contact-label">Message</label>
@@ -4089,7 +4115,7 @@
       var overlay = document.getElementById('intro-overlay');
       if (!overlay) return;
       var done = false;
-      var CYCLE = 2500; // ms, must match animation-duration in CSS
+      var CYCLE = 3000; // ms, must match animation-duration in CSS
 
       function exitIntro() {
         if (done) return;
@@ -4374,26 +4400,9 @@
             }
           });
 
-          // Lightweight-wheel-style motion, now full-frame:
-          //   • Wide orbit swings (±420) so the logo partially bleeds off-edge at stages 1/2
-          //   • Big climax scale (1.45) at stage 2 → 3,logo fills/overwhelms the frame
-          //   • Settles back smaller during stage 3 so the flanking cards stay readable
-          //   • 3 full Y revolutions + single X barrel roll, weighted easing
-
-          // 0.00 → 0.28 : intro grow + drift left + first Y revolution
-          pinTL.fromTo(logo,
-            { x: 0,    y: -150, rotation: 0, rotationX: 0, rotationY:    0, scale: 0.55 },
-            { x: -420, y: 0,    rotation: 0, rotationX: 0, rotationY: -360, scale: 1.1, ease: 'power3.inOut', duration: 0.28 },
-            0);
-          // 0.28 → 0.55 : left → right + second revolution
-          pinTL.to(logo, { x: 420, y: 0, rotationY: -720, scale: 1.15, ease: 'power3.inOut', duration: 0.27 }, 0.28);
-          // 0.55 → 0.72 : climax, big push to center, barrel roll, third Y revolution. Peak scale.
-          pinTL.to(logo, { x: 0, rotationX: -360, rotationY: -1080, scale: 1.45, ease: 'power3.inOut', duration: 0.17 }, 0.55);
-          // 0.72 → 0.80 : fast settle down to the original "stage-4 size" (~0.6 of the bigger base)
-          // before cards fade in at 0.80. This restores the small, resolved feel of the end state.
-          pinTL.to(logo, { scale: 0.6, ease: 'power2.out', duration: 0.08 }, 0.72);
-          // 0.80 → 1.00 : gentle swell as M falls
-          pinTL.to(logo, { scale: 0.67, ease: 'power2.out', duration: 0.20 }, 0.80);
+          // Position + scale + rotation are all handled inside Three.js on the 3D mesh now
+          // (see initLogo3D below). The .fm-logo-stage div is hidden on desktop once 3D activates,
+          // so we skip any tweens targeting it — they would be no-ops at best.
 
           // Panel crossfades, sharp-but-smooth opacity flips at stage boundaries
           pinTL.to(panels[0], { opacity: 0, duration: 0.06, ease: 'none' }, 0.22);
@@ -4405,7 +4414,175 @@
 
           // Force timeline duration to exactly 1.0,keeps all positions as % of pin progress
           pinTL.to({}, { duration: 0.001 }, 1);
+
+          // ── 3D LOGO: Three.js extruded mesh ──────────────────────────
+          // Canvas is full-stage so the mesh can orbit without being clipped by a small wrapper.
+          // Position, scale and rotation are all driven in 3D world space by a parallel
+          // ScrollTrigger timeline synced to the pin. Falls back silently if Three.js fails.
+          initLogo3D(hero, stage);
         })();
+
+        function initLogo3D(hero, stage) {
+          if (typeof THREE === 'undefined' || !THREE.SVGLoader) return;
+
+          var canvas = document.getElementById('fm-3d-canvas');
+          if (!canvas) return;
+
+          var scene    = new THREE.Scene();
+          var camera   = new THREE.PerspectiveCamera(35, 1, 1, 5000);
+          // z is recalculated in sizeRenderer so that 1 world unit ≈ 1 CSS pixel at z=0.
+          camera.position.set(0, 0, 900);
+
+          var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+          renderer.outputEncoding = THREE.sRGBEncoding;
+
+          // Near-neutral lighting so the SVG colors read accurately.
+          scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+          var keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+          keyLight.position.set(6, 10, 9);
+          scene.add(keyLight);
+          var fillLight = new THREE.DirectionalLight(0xffffff, 0.35);
+          fillLight.position.set(-8, -3, 6);
+          scene.add(fillLight);
+
+          var group = new THREE.Group();
+          scene.add(group);
+
+          function sizeRenderer() {
+            var rect = stage.getBoundingClientRect();
+            var w = Math.max(2, Math.floor(rect.width));
+            var h = Math.max(2, Math.floor(rect.height));
+            renderer.setSize(w, h, false);
+            camera.aspect = w / h;
+            // Auto-calibrate camera distance so the frustum height at z=0 equals the canvas height.
+            // This makes 1 Three.js world unit == 1 CSS pixel, so our px-based animation values
+            // (x: -420 etc.) translate directly to world coordinates.
+            var fovRad = camera.fov * Math.PI / 180;
+            camera.position.z = h / (2 * Math.tan(fovRad / 2));
+            camera.updateProjectionMatrix();
+          }
+          sizeRenderer();
+          new ResizeObserver(sizeRenderer).observe(stage);
+
+          var loader = new THREE.SVGLoader();
+          loader.load('brand_assets/freedomind-logo-vector.svg', function(data) {
+            var paths = data.paths;
+            paths.forEach(function(p) {
+              // SVG fills are sRGB; convert to linear so lighting doesn't darken/shift them.
+              var color = p.color.clone().convertSRGBToLinear();
+              var material = new THREE.MeshStandardMaterial({
+                color: color,
+                metalness: 0.0,
+                roughness: 0.55,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 1
+              });
+              var shapes = THREE.SVGLoader.createShapes(p);
+              shapes.forEach(function(shape) {
+                var geom = new THREE.ExtrudeGeometry(shape, {
+                  depth: 60,
+                  bevelEnabled: true,
+                  bevelSegments: 4,
+                  bevelSize: 2.5,
+                  bevelThickness: 2.5,
+                  curveSegments: 12
+                });
+                geom.computeVertexNormals();
+                var mesh = new THREE.Mesh(geom, material);
+                group.add(mesh);
+              });
+            });
+
+            // SVG Y-axis is inverted vs Three.js world Y, origin is top-left.
+            // Re-center group on its own bounding box so rotations pivot the middle,
+            // then flip Y via negative scale so the logo reads right-side up.
+            var bbox = new THREE.Box3().setFromObject(group);
+            var size = new THREE.Vector3();
+            bbox.getSize(size);
+            var center = new THREE.Vector3();
+            bbox.getCenter(center);
+            group.children.forEach(function(m) {
+              m.geometry.translate(-center.x, -center.y, -size.z / 2);
+            });
+
+            // Fit: target width ≈ 820 CSS px at rest (scale 1.0), so the existing
+            // scale keyframes (0.55 → 1.45) swing the logo between ~450 and ~1190 px.
+            var maxDim = Math.max(size.x, size.y);
+            var FIT = 820 / maxDim;
+            function setScale(s) {
+              group.scale.set(FIT * s, -FIT * s, FIT * s);
+            }
+            setScale(1);
+
+            stage.classList.add('is-3d-ready');
+
+            // Render loop
+            (function tick() {
+              renderer.render(scene, camera);
+              requestAnimationFrame(tick);
+            })();
+
+            // ── Full mesh timeline: position + scale + rotation in world space ──
+            // Same beats as the previous div-level animation, now rendered in true 3D.
+            var TWO_PI = Math.PI * 2;
+            // Scale is applied via a proxy object so one tween updates x/y/z together
+            // (keeping the Y-flip sign). group.userData.s tracks the unitless scale factor.
+            group.userData.s = 1;
+            function applyScale() { setScale(group.userData.s); }
+
+            var meshTL = gsap.timeline({
+              scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.3
+              }
+            });
+
+            // 0 → 0.28 : intro drift left + first Y revolution
+            meshTL.fromTo(group.position,
+              { x: 0, y: 150, z: 0 },
+              { x: -420, y: 0, ease: 'power3.inOut', duration: 0.28 }, 0);
+            meshTL.fromTo(group.userData, { s: 0.55 },
+              { s: 1.1, ease: 'power3.inOut', duration: 0.28, onUpdate: applyScale }, 0);
+            meshTL.fromTo(group.rotation, { x: 0, y: 0 },
+              { y: -TWO_PI, ease: 'power3.inOut', duration: 0.28 }, 0);
+
+            // 0.28 → 0.55 : left → right sweep + second revolution
+            meshTL.to(group.position,   { x: 420, y: 0, ease: 'power3.inOut', duration: 0.27 }, 0.28);
+            meshTL.to(group.userData,   { s: 1.15, ease: 'power3.inOut', duration: 0.27, onUpdate: applyScale }, 0.28);
+            meshTL.to(group.rotation,   { y: -TWO_PI * 2, ease: 'power3.inOut', duration: 0.27 }, 0.28);
+
+            // 0.55 → 0.72 : climax, big push to center + barrel roll + third revolution
+            meshTL.to(group.position, { x: 0, ease: 'power3.inOut', duration: 0.17 }, 0.55);
+            meshTL.to(group.userData, { s: 1.45, ease: 'power3.inOut', duration: 0.17, onUpdate: applyScale }, 0.55);
+            meshTL.to(group.rotation, { x: -TWO_PI, y: -TWO_PI * 3, ease: 'power3.inOut', duration: 0.17 }, 0.55);
+
+            // 0.72 → 0.80 : quick settle back to a smaller size before the final stage
+            meshTL.to(group.userData, { s: 0.6, ease: 'power2.out', duration: 0.08, onUpdate: applyScale }, 0.72);
+
+            // Stage 4 (0.80 → 1.00): scale up dramatically as the viewer scrolls, then fade to reveal the next section.
+            // Opacity proxy on userData, applied to every material in the group each frame.
+            group.userData.opacity = 1;
+            function applyOpacity() {
+              group.traverse(function(n) {
+                if (n.material) n.material.opacity = group.userData.opacity;
+              });
+            }
+
+            // 0.80 → 1.00 : grow big
+            meshTL.to(group.userData, { s: 2.4, ease: 'power2.in', duration: 0.20, onUpdate: applyScale }, 0.80);
+            meshTL.to(group.rotation, { y: -TWO_PI * 3 - 0.25, ease: 'power2.out', duration: 0.20 }, 0.80);
+            // 0.88 → 1.00 : fade away while it's still growing
+            meshTL.to(group.userData, { opacity: 0, ease: 'power2.in', duration: 0.12, onUpdate: applyOpacity }, 0.88);
+
+            meshTL.to({}, { duration: 0.001 }, 1);
+          }, undefined, function(err) {
+            console.warn('3D logo SVG failed to load, keeping PNG fallback', err);
+          });
+        }
 
         // Refresh ScrollTrigger after any SPA page change so new sections get hooks.
         window.addEventListener('fm-page-changed', function() {
