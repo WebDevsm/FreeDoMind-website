@@ -807,7 +807,15 @@
       .fm-cinema-hero { height: auto; }
       .fm-cinema-stage { position: relative; height: auto; min-height: 100vh; padding: 6rem 1.5rem 4rem; }
       .fm-stage-rail, .fm-scroll-cue { display: none; }
-      .fm-logo-stage { position: relative; transform: none; left: auto; top: auto; margin: 0 auto 2rem; }
+      .fm-logo-stage {
+        position: relative;
+        transform: none;
+        left: auto;
+        top: auto;
+        width: min(88vw, 440px);
+        max-width: 100%;
+        margin: 0 auto 2rem;
+      }
       .fm-panel { position: relative; inset: auto; opacity: 1; transform: none; }
       .fm-panel + .fm-panel { display: none; }   /* show only stage 0 on mobile */
     }
@@ -2032,6 +2040,17 @@
     @media (max-width: 1024px) {
       .nav-hamburger { display: flex; }
       .btn-nav { display: none; }
+    }
+
+    /* Shrink nav brand on narrow screens so it doesn't overlap the hamburger */
+    @media (max-width: 640px) {
+      .nav { left: 1rem; right: 1rem; padding: 0.4rem 1rem; }
+      .nav-brand { gap: 8px; }
+      .nav-brand img { height: 40px !important; }
+      .nav-brand > span { font-size: 0.78rem !important; letter-spacing: 0.16em !important; }
+    }
+    @media (max-width: 420px) {
+      .nav-brand > span { display: none; }
     }
 
     /* ══════════════════════════════════════════════════
