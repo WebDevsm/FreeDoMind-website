@@ -2,3 +2,20 @@ node_modules/
 temporary screenshots/
 .DS_Store
 .claude/
+
+# freedomind_assets.file: whitelist only files referenced in index.html.
+# Raw source footage (ScreenRecording*, RPReplay*, unused .mov/.mp4/.jpeg) stays local.
+freedomind_assets.file/*
+!freedomind_assets.file/5af204b7-f06d-467f-8fb3-094424694439.jpeg
+!freedomind_assets.file/IMG_9538.jpeg
+!freedomind_assets.file/IMG_9538.webp
+!freedomind_assets.file/mannequin-34.webp
+!freedomind_assets.file/3B668445-0DD8-4D04-A0F0-49EC109E9D08.webp
+!freedomind_assets.file/IMG_6172.webp
+!freedomind_assets.file/IMG_9043.webp
+!freedomind_assets.file/IMG_1115.webp
+!freedomind_assets.file/IMG_5075.webp
+!freedomind_assets.file/att.xDmi7YXNKkMAjoP10su2mYkFCww5q1--J6GfvvC6f7Q.webp
+!freedomind_assets.file/video-output-3B06FFB0-849B-4AEF-8A91-AC485CEB2D42-1.mp4
+!freedomind_assets.file/video-output-6F4E2EC0-757E-4706-B983-FCA30B381D34-1.mp4
+!freedomind_assets.file/video-output-58FDA77A-3545-4CFC-9C94-730466D6CFB0-1.mp4
