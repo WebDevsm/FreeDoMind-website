@@ -25,8 +25,8 @@ const mimeTypes = {
 };
 
 createServer((req, res) => {
-  const rawPath = req.url === '/' ? '/index.html' : req.url;
-  const urlPath = decodeURIComponent(rawPath.split('?')[0]);
+  const stripped = decodeURIComponent(req.url.split('?')[0]);
+  const urlPath = stripped === '/' ? '/index.html' : stripped;
   const filePath = join(__dirname, urlPath);
 
   readFile(filePath, (err, data) => {
