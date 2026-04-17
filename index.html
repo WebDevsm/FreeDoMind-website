@@ -4754,21 +4754,6 @@
       }
     }
 
-    // ══════ HASH ROUTING ══════
-    window.addEventListener('popstate', function(e) {
-      var page = (e.state && e.state.page) || location.hash.replace('#', '') || 'home';
-      showPage(page, true);
-    });
-    // On first load, pick up hash if present (e.g. #about)
-    (function() {
-      var hash = location.hash.replace('#', '');
-      if (hash && document.getElementById('page-' + hash)) {
-        showPage(hash, true);
-      } else {
-        history.replaceState({ page: 'home' }, '', '#home');
-      }
-    })();
-
     // ══════ NAV SCROLL STATE (smooth rAF lerp) ══════
     const nav = document.getElementById('main-nav');
     let _rafNav = null;
@@ -4814,6 +4799,21 @@
       if (!_rafNav) _rafNav = requestAnimationFrame(lerpNav);
     }, { passive: true });
     lerpNav();
+
+    // ══════ HASH ROUTING ══════
+    window.addEventListener('popstate', function(e) {
+      var page = (e.state && e.state.page) || location.hash.replace('#', '') || 'home';
+      showPage(page, true);
+    });
+    // On first load, pick up hash if present (e.g. #about)
+    (function() {
+      var hash = location.hash.replace('#', '');
+      if (hash && document.getElementById('page-' + hash)) {
+        showPage(hash, true);
+      } else {
+        history.replaceState({ page: 'home' }, '', '#home');
+      }
+    })();
 
     // ══════ SCROLL REVEAL ══════
     let revealObserver;
