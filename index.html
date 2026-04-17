@@ -28,9 +28,11 @@
   <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FreeDoMind">
   <link rel="manifest" href="favicon_io/site.webmanifest">
   <meta name="theme-color" content="#5b0c17">
-
   <!-- Vercel Analytics + Speed Insights (served by Vercel edge; no-op on other hosts). -->
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
@@ -768,6 +770,54 @@
       margin-top: 1.6rem;
       display: flex; align-items: center; gap: 1.75rem;
       flex-wrap: wrap; justify-content: center;
+    }
+
+    .hero-welcome {
+      position: absolute;
+      top: 9rem;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 20;
+      opacity: 1;
+      transition: opacity 0.35s ease;
+    }
+    .hero-welcome .intro-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.6rem, 2.6vw, 2.6rem);
+      color: var(--pink);
+      line-height: 1; margin-bottom: -0.3rem;
+    }
+    .hero-welcome .intro-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: #fff;
+      margin: 0;
+    }
+    .hero-welcome.is-hidden { opacity: 0; }
+    .hero-trust {
+      text-align: center;
+      max-width: 420px;
+      padding: 1.25rem 0;
+    }
+    .hero-trust-quote {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #fff;
+    }
+    .hero-trust-attr {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(248,189,206,0.5);
     }
 
     /* Panels 1-3,paired topic cards flanking the logo */
@@ -2401,6 +2451,8 @@
       [data-fm-reveal-word] [data-fm-word] { opacity: 1; transform: none; }
       [data-fm-scale-text],
       [data-fm-parallax] { transform: none !important; }
+      #intro-overlay { display: none !important; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
     /* ── NAV BRAND & LINK ENTRANCE STAGGER ──────── */
@@ -2799,8 +2851,106 @@
     }
 
   </style>
+
+  <!-- Structured Data: Service + FAQ -->
+  <script type="application/ld+json">
+  [{
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "FreeDoMind",
+    "url": "https://freedomind.life",
+    "logo": "https://freedomind.life/brand_assets/freedomind-logo.webp",
+    "description": "Life, mindset and business coaching with Christine Borg. Empowering minds to break through limits and live with purpose, freedom and clarity.",
+    "founder": {
+      "@type": "Person",
+      "name": "Christine Borg",
+      "jobTitle": "Life Coach, Speaker & Trainer"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "MT"
+    },
+    "email": "info.christineborg@gmail.com",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Coaching Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "One-On-One Coaching",
+            "description": "Break through limiting beliefs, eliminate self-sabotaging behaviours, and create lasting transformation in every area of your life."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Team Coaching & Workshops",
+            "description": "Powerful coaching experiences that transform how your team thinks, communicates, leads, and achieves — building a culture of excellence."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Speaking & Keynotes",
+            "description": "Electrifying, heart-centred keynotes with practical tools and transformational insights to live and lead with freedom and purpose."
+          }
+        }
+      ]
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is life coaching?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Life coaching is a collaborative process where Christine helps you identify and break through limiting beliefs, eliminate self-sabotaging behaviours, and create lasting transformation across every area of your life — career, relationships, health, and personal fulfilment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who is Christine Borg?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Christine Borg is a certified Life Coach, Speaker, and Trainer based in Malta. She is the founder of FreeDoMind and is on a mission to transform minds and lives, one breakthrough at a time, through one-on-one coaching, team workshops, and keynote speaking."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What coaching services does FreeDoMind offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "FreeDoMind offers three core services: One-On-One Coaching for personal breakthroughs, Team Coaching & Workshops for organisational transformation, and Speaking & Keynotes for events and conferences."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I book a session with Christine?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can book a session by visiting the Contact page on freedomind.life and filling out the enquiry form, or by emailing Christine directly at info.christineborg@gmail.com."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can Christine speak at my event?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Christine delivers keynotes and workshops on topics including mindset and resilience, leadership excellence, women's empowerment, financial abundance, and holistic wellbeing. Get in touch via the contact form to discuss your event."
+        }
+      }
+    ]
+  }]
+  </script>
 </head>
-<body>
+<body class="fm-stage-0">
   <a class="skip-link" href="#main-content">Skip to content</a>
 
   <!-- ══════ INTRO OVERLAY ══════ -->
@@ -2924,6 +3074,10 @@
     <!-- CINEMA HERO, pinned scrollytelling, 4 stages -->
     <section class="fm-cinema-hero" id="fm-cinema-hero">
       <div class="fm-cinema-stage">
+        <div class="hero-welcome">
+          <div class="intro-script">welcome to</div>
+          <h1 class="intro-display">FREEDOMIND</h1>
+        </div>
         <!-- Pre-rendered gradient meshes (one per stage; crossfade via opacity) -->
         <div class="fm-mesh fm-mesh-0 is-on"></div>
         <div class="fm-mesh fm-mesh-1"></div>
@@ -2961,8 +3115,10 @@
         <!-- Panel 0: Brand intro -->
         <div class="fm-panel fm-panel-intro is-active" id="fm-panel-0">
           <div class="intro-eyebrow">Life <span style="opacity:.55">·</span> Mindset <span style="opacity:.55">·</span> Business Coach</div>
-          <div class="intro-script">welcome to</div>
-          <h1 class="intro-display">FREEDOMIND</h1>
+          <div class="hero-trust">
+            <span class="hero-trust-quote">"A life-changing experience, I feel stronger, clearer, and more aligned than ever."</span>
+            <span class="hero-trust-attr">Sarah M. Coaching Client</span>
+          </div>
           <p class="intro-sub">Empowering minds, in an unconventional way. A pinned conversation between motion, mind, and meaning.</p>
           <div class="intro-ctas">
             <button class="btn-primary" onclick="showPage('contact')">Work With Me</button>
@@ -3159,7 +3315,7 @@
       <div class="features-inner">
         <div class="features-header reveal">
           <h2 class="features-h2">Discover the areas you want to work on.</h2>
-          <button class="btn-bordeaux" onclick="showPage('one-on-one')">Work With Me</button>
+          <button class="btn-bordeaux" onclick="showPage('one-on-one')">Explore Coaching</button>
         </div>
         <div class="features-grid">
           <div class="feature-card reveal">
@@ -3444,15 +3600,14 @@
         <div class="section-label" style="color:var(--pink)">Meet Christine</div>
         <h1 class="page-h1" data-fm-scale-text data-fm-scale-from="0.88" data-fm-scale-to="1.08">The Powerhouse Behind <em>FreeDoMind!</em></h1>
         <p class="page-sub">A Life Coach, Speaker, and Trainer on a mission to transform minds and lives, one breakthrough at a time.</p>
-        <button class="btn-primary" onclick="showPage('contact')">Work With Christine</button>
       </div>
       <div class="page-hero-image">
         <div class="about-collage" aria-label="Moments with Christine">
-          <div class="about-collage-tile"><img src="freedomind_assets.file/3B668445-0DD8-4D04-A0F0-49EC109E9D08.webp" alt="" loading="lazy" style="object-position: center 20%;"></div>
-          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_6172.webp" alt="" loading="lazy" style="object-position: center 65%;"></div>
-          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_9043.webp" alt="" loading="lazy" style="object-position: center 20%;"></div>
-          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_1115.webp" alt="" loading="lazy" style="object-position: center 20%;"></div>
-          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_5075.webp" alt="" loading="lazy" style="object-position: center 60%;"></div>
+          <div class="about-collage-tile"><img src="freedomind_assets.file/3B668445-0DD8-4D04-A0F0-49EC109E9D08.webp" alt="" style="object-position: center 20%;"></div>
+          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_6172.webp" alt="" style="object-position: center 65%;"></div>
+          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_9043.webp" alt="" style="object-position: center 20%;"></div>
+          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_1115.webp" alt="" style="object-position: center 20%;"></div>
+          <div class="about-collage-tile"><img src="freedomind_assets.file/IMG_5075.webp" alt="" style="object-position: center 60%;"></div>
         </div>
       </div>
     </section>
@@ -3720,7 +3875,7 @@
   <div id="page-freedom" class="page">
     <section class="freedom-hub">
       <div class="freedom-hub-image">
-        <img src="brand_assets/freedom-hub-hero.webp" alt="Christine Borg" loading="lazy" decoding="async">
+        <img src="brand_assets/freedom-hub-hero.webp" alt="Christine Borg" decoding="async">
       </div>
       <div class="freedom-hub-content">
         <div class="section-label">The Freedom Hub</div>
@@ -3756,7 +3911,6 @@
         <div class="section-label" style="color:var(--pink)">One-On-One Coaching</div>
         <h1 class="page-h1" data-fm-reveal-word>Unlock Your Potential in <em>Every Area of Life</em></h1>
         <p class="page-sub">Break through limiting beliefs, eliminate self-sabotaging behaviours, and create lasting transformation in every area of your life.</p>
-        <button class="btn-primary" onclick="showPage('contact')">Work With Me</button>
       </div>
       <div class="page-hero-image coaching-hero-image">
         <img src="freedomind_assets.file/IMG_9538.jpeg" alt="One-On-One Coaching" loading="eager">
@@ -3774,7 +3928,7 @@
           <button class="btn-primary" style="margin-top:1.5rem;" onclick="showPage('contact')">Book a Session</button>
         </div>
         <div class="service-intro-image reveal" style="transition-delay:.15s">
-          <img src="brand_assets/one-on-one-approach.webp" alt="Christine Borg coaching" loading="lazy" decoding="async">
+          <img src="brand_assets/one-on-one-approach.webp" alt="Christine Borg coaching" decoding="async">
         </div>
       </div>
     </section>
@@ -3850,7 +4004,6 @@
         <div class="section-label" style="color:var(--pink)">Team Coaching &amp; Workshops</div>
         <h1 class="page-h1" data-fm-reveal-word>Elevate your <em>Effectiveness</em></h1>
         <p class="page-sub">Powerful coaching experiences that transform how your team thinks, communicates, leads, and achieves, creating a culture of excellence and growth.</p>
-        <button class="btn-primary" onclick="showPage('contact')">Get In Touch</button>
       </div>
     </section>
 
@@ -4107,14 +4260,13 @@
         <h1 class="page-h1">Let's Create <em>Freedom Together</em></h1>
       </div>
       <div class="speaking-hero-photo">
-        <img src="freedomind_assets.file/att.xDmi7YXNKkMAjoP10su2mYkFCww5q1--J6GfvvC6f7Q.webp" alt="Christine speaking on stage" loading="lazy" decoding="async">
+        <img src="freedomind_assets.file/att.xDmi7YXNKkMAjoP10su2mYkFCww5q1--J6GfvvC6f7Q.webp" alt="Christine speaking on stage" decoding="async">
       </div>
       <div class="speaking-hero-photo">
-        <img src="brand_assets/speaking-hero-2.webp" alt="Christine speaking" loading="lazy" decoding="async">
+        <img src="brand_assets/speaking-hero-2.webp" alt="Christine speaking" decoding="async">
       </div>
       <div class="speaking-hero-sub">
         <p class="page-sub">Christine delivers electrifying, heart-centred talks that ignite audiences with practical tools and transformational insights to live and lead with true freedom and purpose.</p>
-        <button class="btn-primary" style="margin-top:1.5rem;" onclick="showPage('contact')">Book Christine</button>
       </div>
     </section>
 
@@ -4543,11 +4695,12 @@
       });
     }
 
-    function showPage(id) {
+    function showPage(id, skipPush) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       const target = document.getElementById('page-' + id);
       if (target) target.classList.add('active');
       fmApplyPageMeta(id);
+      if (!skipPush) history.pushState({ page: id }, '', '#' + id);
       window.scrollTo({ top: 0, behavior: 'instant' });
       if (window.fmLenis) window.fmLenis.scrollTo(0, { immediate: true });
 
@@ -4594,7 +4747,27 @@
 
       // Notify motion system (hero orb visibility, ScrollTrigger refresh)
       window.dispatchEvent(new CustomEvent('fm-page-changed', { detail: { page: id } }));
+
+      // Delayed refresh so layout has settled before GSAP recalculates pin positions
+      if (typeof ScrollTrigger !== 'undefined') {
+        setTimeout(() => ScrollTrigger.refresh(), 120);
+      }
     }
+
+    // ══════ HASH ROUTING ══════
+    window.addEventListener('popstate', function(e) {
+      var page = (e.state && e.state.page) || location.hash.replace('#', '') || 'home';
+      showPage(page, true);
+    });
+    // On first load, pick up hash if present (e.g. #about)
+    (function() {
+      var hash = location.hash.replace('#', '');
+      if (hash && document.getElementById('page-' + hash)) {
+        showPage(hash, true);
+      } else {
+        history.replaceState({ page: 'home' }, '', '#home');
+      }
+    })();
 
     // ══════ NAV SCROLL STATE (smooth rAF lerp) ══════
     const nav = document.getElementById('main-nav');
@@ -4733,6 +4906,8 @@
     (function() {
       var overlay = document.getElementById('intro-overlay');
       if (!overlay) return;
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReduced) { overlay.style.display = 'none'; return; }
       var done = false;
       var CYCLE = 3000; // ms, must match animation-duration in CSS
 
@@ -4877,13 +5052,15 @@
         gsap.registerPlugin(ScrollTrigger);
 
         //,Lenis smooth scroll, luxury easing, ~1.1s of glide
+        var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var lenis = new Lenis({
           duration: 1.1,
           easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-          smoothWheel: true,
+          smoothWheel: !prefersReduced,
           smoothTouch: false, // keep native feel on mobile
         });
-        window.fmLenis = lenis;
+        if (prefersReduced) lenis.destroy();
+        window.fmLenis = prefersReduced ? null : lenis;
 
         // Keep ScrollTrigger in sync with Lenis
         lenis.on('scroll', ScrollTrigger.update);
@@ -5039,6 +5216,7 @@
           gsap.set(panels[0], { opacity: 1 });
           gsap.set([panels[1], panels[2], panels[3]], { opacity: 0 });
 
+          var heroTrust = stage.querySelector('.hero-welcome');
           function tintTo(idx) {
             meshLayers.forEach(function(m, i) { m.classList.toggle('is-on', i === idx); });
             stageItems.forEach(function(it, i) { it.classList.toggle('is-active', i === idx); });
@@ -5047,6 +5225,7 @@
             panels.forEach(function(panel, i) {
               panel.classList.toggle('is-active', i === idx);
             });
+            if (heroTrust) heroTrust.classList.toggle('is-hidden', idx !== 0);
           }
 
           // ── ONE master scrub timeline drives everything tied to scroll.
@@ -5266,6 +5445,16 @@
             window.addEventListener('fm-page-changed', function(e) {
               if (e.detail && e.detail.page === 'home') {
                 meshTL.progress(0);
+                // Explicitly restore opacity — progress(0) resets the proxy but
+                // doesn't always trigger onUpdate for every tween
+                group.userData.opacity = 1;
+                applyOpacity();
+                group.userData.s = 0.55;
+                applyScale();
+                group.position.set(0, 150, 0);
+                group.rotation.set(0, 0, 0);
+                // Re-measure canvas after page is visible again
+                setTimeout(sizeRenderer, 60);
               }
             });
           }, undefined, function(err) {
