@@ -531,21 +531,20 @@
     .fm-cinema-hero {
       position: relative;
       width: 100%;
-      height: 100vh;          /* was 400vh — cinema scroll-scrub removed for perf */
+      height: 400vh;          /* 4 stages — restored for 3D logo scroll-scrub */
       background: #1a0309;
     }
     .fm-cinema-stage {
-      position: relative;     /* was sticky — no longer pinned */
+      position: sticky;
       top: 0;
       height: 100vh;
       width: 100%;
       overflow: hidden;
       background: var(--bordeaux-deep);
     }
-    /* Hide panels 1-3 (cinema reveal stages). Only the welcome panel (panel 0) shows. */
+    /* Hide panels 1-3 (cinema reveal stages). Only welcome panel (panel 0) shows.
+       The 3D logo animation still scrubs across the 400vh region — panel timeline removed. */
     .fm-panel + .fm-panel { display: none; }
-    /* Hide cinema-only decorations */
-    .fm-stage-rail, .fm-scroll-cue { display: none; }
     /* Vignette (cheap, never changes) */
     .fm-cinema-stage::after {
       content: '';

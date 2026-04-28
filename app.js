@@ -694,16 +694,64 @@
             group.userData.s = 1;
             function applyScale() { setScale(group.userData.s); needsRender = true; }
 
-            // Cinema scroll-scrub REMOVED. Logo sits at rest with a gentle idle rotation.
-            // No scroll-driven scrub, no GSAP ScrollTrigger on the 3D mesh — major perf win.
-            group.position.set(0, 0, 0);
-            group.userData.s = 1.0;
-            applyScale();
-            // Subtle idle rotation: very slow, subtle "alive" feel without per-scroll work.
-            gsap.to(group.rotation, { y: TWO_PI, duration: 60, repeat: -1, ease: 'none', onUpdate: function() { needsRender = true; } });
-            // Resize canvas on SPA return-to-home (so logo redraws cleanly when visible again)
+            var meshTL = gsap.timeline({
+              scrollTrigger: {
+                trigger: hero,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.3,
+                onUpdate: function() { needsRender = true; }
+              }
+            });
+
+            // 0 → 0.28 : intro drift left + first Y revolution
+            meshTL.fromTo(group.position,
+              { x: 0, y: 150, z: 0 },
+              { x: -420, y: 0, ease: 'power3.inOut', duration: 0.28 }, 0);
+            meshTL.fromTo(group.userData, { s: 0.55 },
+              { s: 1.1, ease: 'power3.inOut', duration: 0.28, onUpdate: applyScale }, 0);
+            meshTL.fromTo(group.rotation, { x: 0, y: 0 },
+              { y: -TWO_PI, ease: 'power3.inOut', duration: 0.28 }, 0);
+
+            // 0.28 → 0.55 : left → right sweep + second revolution
+            meshTL.to(group.position,   { x: 420, y: 0, ease: 'power3.inOut', duration: 0.27 }, 0.28);
+            meshTL.to(group.userData,   { s: 1.15, ease: 'power3.inOut', duration: 0.27, onUpdate: applyScale }, 0.28);
+            meshTL.to(group.rotation,   { y: -TWO_PI * 2, ease: 'power3.inOut', duration: 0.27 }, 0.28);
+
+            // 0.55 → 0.72 : climax, big push to center + barrel roll + third revolution
+            meshTL.to(group.position, { x: 0, ease: 'power3.inOut', duration: 0.17 }, 0.55);
+            meshTL.to(group.userData, { s: 1.45, ease: 'power3.inOut', duration: 0.17, onUpdate: applyScale }, 0.55);
+            meshTL.to(group.rotation, { x: -TWO_PI, y: -TWO_PI * 3, ease: 'power3.inOut', duration: 0.17 }, 0.55);
+
+            // 0.72 → 0.80 : quick settle back to a smaller size before the final stage
+            meshTL.to(group.userData, { s: 0.6, ease: 'power2.out', duration: 0.08, onUpdate: applyScale }, 0.72);
+
+            // Stage 4 (0.80 → 1.00): scale up dramatically as the viewer scrolls, then fade to reveal the next section.
+            group.userData.opacity = 1;
+            function applyOpacity() {
+              group.traverse(function(n) { if (n.material) n.material.opacity = group.userData.opacity; });
+            }
+
+            // 0.80 → 1.00 : grow big
+            meshTL.to(group.userData, { s: 2.4, ease: 'power2.in', duration: 0.20, onUpdate: applyScale }, 0.80);
+            meshTL.to(group.rotation, { y: -TWO_PI * 3 - 0.25, ease: 'power2.out', duration: 0.20 }, 0.80);
+            // 0.88 → 1.00 : fade away while it's still growing
+            meshTL.to(group.userData, { opacity: 0, ease: 'power2.in', duration: 0.12, onUpdate: applyOpacity }, 0.88);
+
+            meshTL.to({}, { duration: 0.001 }, 1);
+
+            // Reset 3D logo timeline when returning to home via SPA navigation
             window.addEventListener('fm-page-changed', function(e) {
-              if (e.detail && e.detail.page === 'home') setTimeout(sizeRenderer, 60);
+              if (e.detail && e.detail.page === 'home') {
+                meshTL.progress(0);
+                group.userData.opacity = 1;
+                applyOpacity();
+                group.userData.s = 0.55;
+                applyScale();
+                group.position.set(0, 150, 0);
+                group.rotation.set(0, 0, 0);
+                setTimeout(sizeRenderer, 60);
+              }
             });
           }, undefined, function(err) {
             console.warn('3D logo SVG failed to load, keeping PNG fallback', err);
