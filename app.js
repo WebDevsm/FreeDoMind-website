@@ -615,9 +615,12 @@
 
           // ── 3D LOGO: Three.js extruded mesh ──────────────────────────
           // Canvas is full-stage so the mesh can orbit without being clipped by a small wrapper.
-          // Position, scale and rotation are all driven in 3D world space by a parallel
-          // ScrollTrigger timeline synced to the pin. Falls back silently if Three.js fails.
-          initLogo3D(hero, stage);
+          // Three.js is lazy-loaded (see index.html) — try now, retry when ready event fires.
+          if (typeof THREE !== 'undefined' && THREE.SVGLoader) {
+            initLogo3D(hero, stage);
+          } else {
+            window.addEventListener('fm-three-ready', function() { initLogo3D(hero, stage); }, { once: true });
+          }
         })();
 
         function initLogo3D(hero, stage) {
