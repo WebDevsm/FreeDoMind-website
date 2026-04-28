@@ -160,12 +160,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(30,5,12,0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(30,5,12,0.78);
+      /* backdrop-filter removed — Chrome's Skia blur composites the entire viewport
+         behind the nav on every paint frame during scroll. Safari handles it cheaply
+         via CoreAnimation, but Chrome makes it the single biggest scroll-frame cost.
+         Slightly more opaque solid bg is visually nearly identical. */
       border-radius: 14px;
       will-change: transform;
-      transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
     }
     .nav.nav-photo-hero {
       background: transparent;
@@ -178,14 +180,12 @@
       transition: background 0.35s ease;
     }
     .nav.nav-photo-hero.scrolled {
-      background: rgba(30,5,12,0.88);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(30,5,12,0.95);
+      /* backdrop-filter removed — see comment on .nav above */
     }
     .nav.scrolled {
-      background: rgba(61, 8, 16, 0.97);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(61, 8, 16, 0.98);
+      /* backdrop-filter removed — see comment on .nav above */
       padding: 0.3rem 4rem;
       box-shadow: 0 1px 0 rgba(248,189,206,0.12), 0 8px 40px rgba(0,0,0,0.5);
     }
@@ -3408,11 +3408,11 @@
                   src="freedomind_assets.file/video-output-3B06FFB0-849B-4AEF-8A91-AC485CEB2D42-1.mp4"></video>
               </div>
               <div class="video-slide">
-                <video muted loop playsinline preload="none"
+                <video muted loop playsinline preload="metadata"
                   src="freedomind_assets.file/video-output-6F4E2EC0-757E-4706-B983-FCA30B381D34-1.mp4"></video>
               </div>
               <div class="video-slide">
-                <video muted loop playsinline preload="none"
+                <video muted loop playsinline preload="metadata"
                   src="freedomind_assets.file/video-output-58FDA77A-3545-4CFC-9C94-730466D6CFB0-1.mp4"></video>
               </div>
               <button class="video-mute" aria-label="Unmute video" data-muted="true">
