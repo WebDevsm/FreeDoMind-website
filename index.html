@@ -520,6 +520,28 @@
     .btn-ghost-arrow { display: inline-block; transition: transform 0.3s ease; }
     .btn-ghost:hover { color: var(--pink); }
     .btn-ghost:hover .btn-ghost-arrow { transform: translateX(5px); }
+
+    /* Text-only secondary CTA — lower visual weight than ghost button so
+       primary CTA (Work With Me) is clearly the dominant action. */
+    .btn-text {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.6rem 0.4rem;
+      font-family: 'Jost', sans-serif;
+      transition: color 0.2s ease;
+    }
+    .btn-text:hover { color: var(--pink); }
+    .btn-text-arrow { display: inline-block; transition: transform 0.25s ease; }
+    .btn-text:hover .btn-text-arrow { transform: translateX(4px); }
     .hero-wave { position: absolute; bottom: -1px; left: 0; right: 0; pointer-events: none; }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -984,7 +1006,7 @@
     .stat-item + .stat-item { padding-left: 2rem; }
     .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3.75rem; font-weight: 500; color: var(--bordeaux); line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.375rem; }
     .stat-num span { color: var(--red); }
-    .stat-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(91,12,23,0.55); }
+    .stat-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(91,12,23,0.78); }
 
     /* ABOUT (homepage section) */
     .about {
@@ -1478,7 +1500,7 @@
     .tcard-author { display: flex; align-items: center; gap: 0.875rem; }
     .tcard-avatar { width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
     .tcard-name { font-size: 0.98rem; font-weight: 600; color: var(--bordeaux); line-height: 1; margin-bottom: 0.3rem; }
-    .tcard-role { font-size: 0.78rem; font-weight: 300; color: rgba(91,12,23,0.58); letter-spacing: 0.04em; }
+    .tcard-role { font-size: 0.78rem; font-weight: 300; color: rgba(91,12,23,0.80); letter-spacing: 0.04em; }
 
     /* TESTIMONIALS SCROLL COLUMNS */
     .tscroll-columns {
@@ -1503,6 +1525,10 @@
       flex-direction: column;
       gap: 1.5rem;
       animation: tscrollUp var(--tdur, 20s) linear infinite;
+      /* Force permanent GPU layer so the marquee composites once instead of
+         re-promoting every frame. Single biggest win for scrolling marquees. */
+      will-change: transform;
+      transform: translateZ(0);
     }
     @keyframes tscrollUp {
       from { transform: translateY(0); }
@@ -1515,7 +1541,9 @@
       padding: 2rem 1.75rem;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 1px 0 rgba(91,12,23,0.04), 0 6px 28px rgba(91,12,23,0.07);
+      /* Reduced shadow blur 28px -> 12px. Big blur shadows are expensive to
+         repaint when the parent marquee animates — radius² cost scaling. */
+      box-shadow: 0 1px 0 rgba(91,12,23,0.04), 0 4px 12px rgba(91,12,23,0.08);
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
     }
     .tscroll-card::after {
@@ -1526,7 +1554,7 @@
       background: linear-gradient(to top, var(--red), var(--pink));
       transition: height 0.4s ease;
     }
-    .tscroll-card:hover { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(91,12,23,0.06), 0 14px 44px rgba(91,12,23,0.12); }
+    .tscroll-card:hover { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(91,12,23,0.06), 0 6px 18px rgba(91,12,23,0.13); }
     .tscroll-card:hover::after { height: 100%; }
     .tscroll-card-text {
       font-family: 'Cormorant Garamond', serif;
@@ -1545,7 +1573,7 @@
       border: 2px solid rgba(248,189,206,0.45);
     }
     .tscroll-card-name { font-size: 0.98rem; font-weight: 600; color: var(--bordeaux); line-height: 1; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
-    .tscroll-card-role { font-size: 0.78rem; font-weight: 300; color: rgba(91,12,23,0.58); letter-spacing: 0.04em; }
+    .tscroll-card-role { font-size: 0.78rem; font-weight: 300; color: rgba(91,12,23,0.80); letter-spacing: 0.04em; }
 
     /* CTA */
     .cta-section { background: var(--red); padding: 8rem 5rem; position: relative; overflow: hidden; text-align: center; }
@@ -1588,13 +1616,13 @@
     .footer-brand { max-width: 300px; }
     .footer-brand-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
     .footer-brand-name { font-weight: 600; font-size: 1.125rem; letter-spacing: 0.18em; color: #fff; }
-    .footer-brand-tagline { font-size: 0.86rem; font-weight: 300; color: rgba(253,246,228,0.62); letter-spacing: 0.08em; line-height: 1.6; }
+    .footer-brand-tagline { font-size: 0.86rem; font-weight: 300; color: rgba(253,246,228,0.78); letter-spacing: 0.08em; line-height: 1.6; }
     .footer-links { display: flex; gap: 4rem; }
     .footer-col h4 { font-size: 0.74rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(248,189,206,0.55); margin-bottom: 1.375rem; }
     .footer-col a { display: block; font-size: 0.98rem; font-weight: 300; color: rgba(253,246,228,0.78); text-decoration: none; margin-bottom: 0.75rem; transition: color 0.25s ease; cursor: pointer; }
     .footer-col a:hover { color: var(--pink); }
     .footer-bottom { max-width: 1240px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .footer-copy { font-size: 0.8rem; font-weight: 300; color: rgba(253,246,228,0.5); letter-spacing: 0.04em; }
+    .footer-copy { font-size: 0.8rem; font-weight: 300; color: rgba(253,246,228,0.7); letter-spacing: 0.04em; }
     .footer-socials { display: flex; gap: 0.875rem; }
     .footer-social { width: 34px; height: 34px; border: 1px solid rgba(248,189,206,0.18); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.6875rem; font-weight: 500; transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease; }
     .footer-social:hover { border-color: var(--pink); color: var(--pink); background: rgba(248,189,206,0.07); }
@@ -1790,12 +1818,12 @@
     #page-team-coaching .tc-fullbg-hero::before {
       content: '';
       position: absolute;
-      inset: 0;
+      inset: -16px;          /* over-extend so blur halo doesn't reveal seams */
       background-image: url('freedomind_assets.file/5af204b7-f06d-467f-8fb3-094424694439.jpeg');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
-      /* filter: blur(8px) removed — large bg blur is GPU-expensive on Chrome */
+      filter: blur(8px);
       z-index: 0;
     }
     #page-team-coaching .tc-hero-overlay {
@@ -2874,6 +2902,98 @@
       to   { opacity: 1; }
     }
 
+    /* ═══ ACCESSIBILITY: Reduced Motion ═══
+       Respects iOS / macOS / Windows "Reduce Motion" system setting (WCAG + Apple HIG).
+       Disables long animations and scroll-driven effects so users prone to motion
+       sickness or with vestibular conditions get a calm experience. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* ═══ ACCESSIBILITY: Visible Focus Rings ═══
+       Keyboard navigators need a clear indicator of which element has focus.
+       :focus-visible only shows for keyboard (tab), not mouse — so doesn't add
+       visual noise for mouse users. */
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--pink, #f8bdce);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    button:focus-visible, a:focus-visible {
+      outline: 2px solid var(--pink, #f8bdce);
+      outline-offset: 3px;
+    }
+
+    /* ═══ Tabular numbers for stats counters (no reflow when digits change) ═══ */
+    .stat-num, .stat-counter, .stats .number, [data-counter] {
+      font-feature-settings: 'tnum' on, 'lnum' on;
+      font-variant-numeric: tabular-nums lining-nums;
+    }
+
+    /* Skeleton shimmer removed — perpetual animation overhead outweighed
+       the brief loading-state UX. Static dark bg under videos instead. */
+    .video-frame { background: var(--bordeaux-deep, #28050c); }
+
+    /* ═══ MOBILE BOTTOM NAV ═══
+       Thumb-reachable primary navigation for mobile. Visible only ≤768px.
+       Top nav stays as branding bar. Items meet 44pt touch target minimum
+       and respect iPhone home-indicator safe area. */
+    .bottom-nav { display: none; }
+    @media (max-width: 768px) {
+      .bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 90;
+        background: rgba(40,5,12,0.96);
+        border-top: 1px solid rgba(248,189,206,0.14);
+        padding: 0.4rem 0.25rem calc(0.4rem + env(safe-area-inset-bottom, 0));
+        justify-content: space-around;
+        align-items: stretch;
+      }
+      .bottom-nav-item {
+        flex: 1;
+        min-height: 52px;
+        background: none;
+        border: none;
+        padding: 0.5rem 0.25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+        color: rgba(253,246,228,0.6);
+        font-family: 'Jost', sans-serif;
+        font-size: 0.62rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+      .bottom-nav-item svg {
+        width: 22px;
+        height: 22px;
+        transition: stroke-width 0.2s ease, transform 0.2s ease;
+      }
+      .bottom-nav-item:active { transform: scale(0.95); }
+      .bottom-nav-item.is-active {
+        color: var(--pink, #f8bdce);
+      }
+      .bottom-nav-item.is-active svg {
+        stroke-width: 2.2;
+      }
+      /* Reserve space at bottom of pages so content doesn't hide under nav */
+      main { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0)); }
+    }
   </style>
 
   <!-- Structured Data: Service + FAQ -->
@@ -3089,6 +3209,26 @@
     <button class="drawer-cta" onclick="showPage('contact'); closeDrawer()">Work With Me</button>
   </div>
 
+  <!-- Mobile bottom navigation — thumb-reachable, visible only on small screens -->
+  <nav class="bottom-nav" id="bottom-nav" aria-label="Primary mobile navigation">
+    <button class="bottom-nav-item" data-page="home" onclick="showPage('home')" aria-label="Home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1V9.5z"/></svg>
+      <span>Home</span>
+    </button>
+    <button class="bottom-nav-item" data-page="about" onclick="showPage('about')" aria-label="About">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg>
+      <span>About</span>
+    </button>
+    <button class="bottom-nav-item" data-page="freedom" onclick="showPage('freedom')" aria-label="Freedom Hub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+      <span>Freedom</span>
+    </button>
+    <button class="bottom-nav-item" data-page="contact" onclick="showPage('contact')" aria-label="Contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M3 7l9 6 9-6"/></svg>
+      <span>Contact</span>
+    </button>
+  </nav>
+
   <main id="main-content">
   <!-- ══════════════════════════════════════════════════════════════
        PAGE: HOME
@@ -3146,7 +3286,7 @@
           <p class="intro-sub">Empowering minds, in an unconventional way. A pinned conversation between motion, mind, and meaning.</p>
           <div class="intro-ctas">
             <button class="btn-primary" onclick="showPage('contact')">Work With Me</button>
-            <button class="btn-ghost" onclick="showPage('about')">Learn More <span class="btn-ghost-arrow">→</span></button>
+            <button class="btn-text" onclick="showPage('about')">Learn More <span class="btn-text-arrow">→</span></button>
           </div>
         </div>
 

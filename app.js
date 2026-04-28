@@ -40,9 +40,14 @@
       if (!skipPush) history.pushState({ page: id }, '', '#' + id);
       window.scrollTo({ top: 0, behavior: 'instant' });
 
-      // Update nav active state
+      // Update nav active state (top + mobile bottom nav)
       document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
         a.classList.toggle('active-page', a.dataset.page === id);
+      });
+      document.querySelectorAll('.bottom-nav-item[data-page]').forEach(b => {
+        // Highlight bottom-nav for matching page; sub-pages roll up to "freedom"
+        const matchPage = id === 'one-on-one' || id === 'team-coaching' || id === 'speaking' ? 'freedom' : id;
+        b.classList.toggle('is-active', b.dataset.page === matchPage);
       });
 
       // Re-trigger coaching hero image animation on each visit
@@ -149,6 +154,9 @@
         showPage(hash, true);
       } else {
         history.replaceState({ page: 'home' }, '', '#home');
+        // Highlight home in bottom-nav on first load (default state)
+        var homeBtn = document.querySelector('.bottom-nav-item[data-page="home"]');
+        if (homeBtn) homeBtn.classList.add('is-active');
       }
     })();
 
@@ -289,7 +297,13 @@
       var nextBtn  = root.querySelector('.video-arrow.next');
       var muteBtn  = root.querySelector('.video-mute');
       var dotsWrap = root.querySelector('.video-dots');
+      var frame    = root.querySelector('.video-frame');
       if (!slides.length) return;
+      // Stop shimmer skeleton once first video has metadata (frame paints on top of bg)
+      if (frame && videos[0]) {
+        if (videos[0].readyState >= 1) frame.classList.add('is-loaded');
+        else videos[0].addEventListener('loadedmetadata', function() { frame.classList.add('is-loaded'); }, { once: true });
+      }
 
       var current = 0;
       var muted   = true;
@@ -390,6 +404,12 @@
 
         //,Lenis smooth scroll, luxury easing, ~1.1s of glide
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // If user has reduce-motion enabled, kill GSAP global timeline at first paint
+        // so any subsequent .to/.fromTo lands instantly. Lenis is also disabled below.
+        if (prefersReduced) {
+          gsap.globalTimeline.timeScale(100);  // 100x = effectively instant
+        }
         var lenis = new Lenis({
           duration: 1.1,
           easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
