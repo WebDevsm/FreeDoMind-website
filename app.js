@@ -565,11 +565,45 @@
             if (heroTrust) heroTrust.classList.toggle('is-hidden', idx !== 0);
           }
 
-          // Cinema scroll-scrub REMOVED for perf. Hero is now a simple 100vh section
-          // with the welcome panel (stage 0) and the 3D logo. No 400vh pin, no panel crossfades.
-          // Just initialize stage 0 once and lock in.
-          tintTo(0);
-          if (scrollCue) scrollCue.classList.add('is-hidden');
+          // Master scrub timeline — drives panel crossfades and stage tint with scroll.
+          var lastStage = -1;
+          var pinTL = gsap.timeline({
+            scrollTrigger: {
+              trigger: hero,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: 0.3,
+              onUpdate: function(self) {
+                var p = self.progress;
+                var newStage = p < 0.28 ? 0 : p < 0.55 ? 1 : p < 0.80 ? 2 : 3;
+                if (newStage !== lastStage) {
+                  lastStage = newStage;
+                  tintTo(newStage);
+                }
+                if (scrollCue) {
+                  scrollCue.classList.toggle('is-hidden', p > 0.02);
+                }
+              }
+            }
+          });
+
+          // Panel crossfades — sharp opacity flips at stage boundaries
+          pinTL.to(panels[0], { opacity: 0, duration: 0.06, ease: 'none' }, 0.22);
+          pinTL.fromTo(panels[1], { opacity: 0 }, { opacity: 1, duration: 0.06, ease: 'none' }, 0.28);
+          pinTL.to(panels[1], { opacity: 0, duration: 0.06, ease: 'none' }, 0.49);
+          pinTL.fromTo(panels[2], { opacity: 0 }, { opacity: 1, duration: 0.06, ease: 'none' }, 0.55);
+          pinTL.to(panels[2], { opacity: 0, duration: 0.06, ease: 'none' }, 0.74);
+          pinTL.fromTo(panels[3], { opacity: 0 }, { opacity: 1, duration: 0.06, ease: 'none' }, 0.80);
+          pinTL.to({}, { duration: 0.001 }, 1);
+
+          // Reset hero to stage 0 when returning to home via SPA navigation
+          window.addEventListener('fm-page-changed', function(e) {
+            if (e.detail && e.detail.page === 'home') {
+              lastStage = -1;
+              tintTo(0);
+              pinTL.progress(0);
+            }
+          });
 
           // ── 3D LOGO: Three.js extruded mesh ──────────────────────────
           // Canvas is full-stage so the mesh can orbit without being clipped by a small wrapper.
