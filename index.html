@@ -37,9 +37,9 @@
   <script defer src="/_vercel/insights/script.js"></script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
   <!-- Animation libraries: Lenis (smooth scroll) + GSAP (scroll-driven sequencing). Defer so they don't block first paint. -->
-  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="/vendor/lenis.min.js" defer></script>
+  <script src="/vendor/gsap.min.js" defer></script>
+  <script src="/vendor/ScrollTrigger.min.js" defer></script>
   <!-- Three.js for 3D hero logo — lazy-loaded after page is interactive to avoid
        blocking the main thread for 3+ seconds on initial scroll.
        The flat .fm-logo-stage acts as fallback until 3D is ready. -->
@@ -53,8 +53,8 @@
         });
       }
       function loadThree() {
-        loadScript('https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js')
-          .then(function() { return loadScript('https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/SVGLoader.js'); })
+        loadScript('/vendor/three.min.js')
+          .then(function() { return loadScript('/vendor/SVGLoader.js'); })
           .then(function() { window.dispatchEvent(new Event('fm-three-ready')); })
           .catch(function() {});
       }
@@ -69,8 +69,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -117,7 +116,7 @@
     .lenis.lenis-smooth iframe { pointer-events: none; }
 
     body {
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--off-white);
       color: var(--bordeaux);
       overflow-x: hidden;
@@ -226,7 +225,7 @@
       border: none;
       padding: 0.3rem 0.65rem;
       border-radius: 7px;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .nav-links a::after, .nav-dropdown-trigger::after {
       content: '';
@@ -401,7 +400,7 @@
       box-shadow: 0 3px 16px rgba(230,41,75,0.35);
       cursor: pointer;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-nav:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(230,41,75,0.5); }
     .btn-nav:active { transform: translateY(0); }
@@ -453,7 +452,7 @@
     }
     .eyebrow-line { width: 36px; height: 1px; background: var(--red); flex-shrink: 0; }
     .hero-h1 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(3.75rem, 8.5vw, 7.5rem);
       font-weight: 500;
       line-height: 1.02;
@@ -498,7 +497,7 @@
       box-shadow: 0 4px 24px rgba(230,41,75,0.38);
       cursor: pointer;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 8px 36px rgba(230,41,75,0.55); }
     .btn-primary:active { transform: translateY(0); }
@@ -515,7 +514,7 @@
       cursor: pointer;
       background: none;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-ghost-arrow { display: inline-block; transition: transform 0.3s ease; }
     .btn-ghost:hover { color: var(--pink); }
@@ -536,7 +535,7 @@
       background: none;
       border: none;
       padding: 0.6rem 0.4rem;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       transition: color 0.2s ease;
     }
     .btn-text:hover { color: var(--pink); }
@@ -619,15 +618,15 @@
       position: absolute;
       left: 50%;
       top: 50%;
-      width: clamp(440px, 56vw, 920px);
+      /* Width scales with whichever dimension shrinks (width OR height). */
+      width: clamp(220px, min(34vw, 56vh), 920px);
       aspect-ratio: 1567 / 732;
       z-index: 4;
       will-change: transform;
       pointer-events: none;
       transform-style: preserve-3d;
-      /* Stage-0 pose baked in so the logo renders in place before GSAP takes
-         over. Must match gsap.set(logo, { xPercent:-50, yPercent:-50, y:-150, scale:0.62 }) */
-      transform: translate(-50%, calc(-50% - 150px)) scale(0.62);
+      /* Y offset also scales with viewport so the logo stays below the wordmark. */
+      transform: translate(-50%, calc(-50% - min(6vw, 10.4vh))) scale(0.62);
     }
     .fm-logo-stage img {
       position: absolute;
@@ -694,14 +693,14 @@
       position: absolute;
       left: 0;
       top: -0.45rem;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 0.95rem;
       font-weight: 300;
       color: rgba(255,255,255,0.55);
       line-height: 1;
     }
     .fm-stage-item-num {
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 0.7rem;
       font-weight: 300;
       letter-spacing: 0.18em;
@@ -709,7 +708,7 @@
       margin-bottom: 0.35rem;
     }
     .fm-stage-item-tag {
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.22em;
@@ -771,30 +770,31 @@
       align-items: center;
       justify-content: flex-end;
       gap: 0.4rem;
-      padding: 0 2rem 8.5rem;
+      /* Larger padding-bottom lifts the content up closer to the M-logo above it. */
+      padding: 0 2rem clamp(3rem, 15vh, 11rem);
       text-align: center;
     }
     .fm-panel-intro .intro-eyebrow {
-      display: flex; align-items: center; gap: 0.875rem;
-      font-size: 0.78rem; font-weight: 400;
+      display: flex; align-items: center; gap: clamp(0.5rem, min(0.5vw, 0.85vh), 0.875rem);
+      font-size: clamp(0.58rem, min(0.55vw, 0.9vh), 0.78rem); font-weight: 400;
       letter-spacing: 0.34em; text-transform: uppercase;
       color: var(--pink);
-      margin-bottom: 1.4rem;
+      margin-bottom: clamp(0.7rem, min(0.95vw, 1.55vh), 1.4rem);
     }
     .fm-panel-intro .intro-eyebrow::before,
     .fm-panel-intro .intro-eyebrow::after {
-      content: ''; width: 36px; height: 1px;
+      content: ''; width: clamp(18px, min(2vw, 3.4vh), 36px); height: 1px;
       background: var(--red); flex-shrink: 0;
     }
     .fm-panel-intro .intro-script {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(1.6rem, 2.6vw, 2.6rem);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1rem, min(1.7vw, 2.85vh), 2.6rem);
       color: var(--pink);
       line-height: 1; margin-bottom: -0.3rem;
     }
     .fm-panel-intro .intro-display {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.4rem, min(2.55vw, 4.25vh), 3.8rem);
       font-weight: 400;
       letter-spacing: 0.16em;
       color: #fff;
@@ -806,22 +806,30 @@
       letter-spacing: 0.16em;
     }
     .fm-panel-intro .intro-sub {
-      margin-top: 1.1rem;
-      font-size: 1.02rem; font-weight: 300;
+      margin-top: clamp(0.5rem, min(0.75vw, 1.25vh), 1.1rem);
+      font-size: clamp(0.78rem, min(0.7vw, 1.18vh), 1.02rem); font-weight: 300;
       color: rgba(253,246,228,0.86);
       letter-spacing: 0.04em;
-      max-width: 600px;
+      max-width: clamp(320px, min(35vw, 58vh), 600px);
       line-height: 1.65;
     }
     .fm-panel-intro .intro-ctas {
-      margin-top: 1.6rem;
-      display: flex; align-items: center; gap: 1.75rem;
+      margin-top: clamp(0.9rem, 1.8vmin, 1.6rem);
+      display: flex; align-items: center; gap: clamp(0.9rem, 2vmin, 1.75rem);
       flex-wrap: wrap; justify-content: center;
+    }
+    .fm-panel-intro .intro-ctas .btn-primary {
+      padding: clamp(0.55rem, 1vmin, 0.9375rem) clamp(1.2rem, 2.4vmin, 2.25rem);
+      font-size: clamp(0.6rem, 0.85vmin, 0.75rem);
+    }
+    .fm-panel-intro .intro-ctas .btn-text {
+      font-size: clamp(0.68rem, 0.95vmin, 0.85rem);
     }
 
     .hero-welcome {
       position: absolute;
-      top: 9rem;
+      /* Pushed lower so the wordmark sits closer to the M-logo below it. */
+      top: clamp(3rem, 16vh, 12rem);
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
@@ -830,14 +838,15 @@
       transition: opacity 0.35s ease;
     }
     .hero-welcome .intro-script {
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(1.6rem, 2.6vw, 2.6rem);
+      font-family: 'Montserrat', sans-serif;
+      /* Scales with whichever viewport dimension shrinks — width OR height. */
+      font-size: clamp(1rem, min(1.7vw, 2.85vh), 2.6rem);
       color: var(--pink);
       line-height: 1; margin-bottom: -0.3rem;
     }
     .hero-welcome .intro-display {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4.4vw, 3.8rem);
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.4rem, min(2.55vw, 4.25vh), 3.8rem);
       font-weight: 400;
       letter-spacing: 0.16em;
       color: #fff;
@@ -846,21 +855,21 @@
     .hero-welcome.is-hidden { opacity: 0; }
     .hero-trust {
       text-align: center;
-      max-width: 420px;
-      padding: 1.25rem 0;
+      max-width: clamp(220px, min(28vw, 47vh), 420px);
+      padding: clamp(0.5rem, min(0.85vw, 1.4vh), 1.25rem) 0;
     }
     .hero-trust-quote {
       display: block;
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
-      font-size: 0.95rem;
+      font-size: clamp(0.68rem, min(0.63vw, 1.05vh), 0.95rem);
       line-height: 1.6;
       color: #fff;
     }
     .hero-trust-attr {
       display: block;
-      margin-top: 0.5rem;
-      font-size: 0.7rem;
+      margin-top: 0.4rem;
+      font-size: clamp(0.5rem, min(0.47vw, 0.78vh), 0.7rem);
       font-weight: 500;
       letter-spacing: 0.12em;
       text-transform: uppercase;
@@ -935,7 +944,7 @@
     }
     .fm-card-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
     .fm-card-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.85rem;
       font-weight: 500;
       color: #fff;
@@ -1004,7 +1013,7 @@
     .stat-item { padding-right: 2rem; border-right: 1px solid rgba(91,12,23,0.08); }
     .stat-item:last-child { border-right: none; }
     .stat-item + .stat-item { padding-left: 2rem; }
-    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3.75rem; font-weight: 500; color: var(--bordeaux); line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.375rem; }
+    .stat-num { font-family: 'Montserrat', sans-serif; font-size: 3.75rem; font-weight: 500; color: var(--bordeaux); line-height: 1; letter-spacing: -0.03em; margin-bottom: 0.375rem; }
     .stat-num span { color: var(--red); }
     .stat-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(91,12,23,0.78); }
 
@@ -1030,7 +1039,7 @@
     .paint-bg-svg { position: absolute; width: 370px; height: 370px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 0; overflow: visible; }
     .about-mark-canvas { position: relative; z-index: 1; display: block; }
     .section-label { font-size: 0.74rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--red); margin-bottom: 1.375rem; }
-    .about-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.25rem, 3.8vw, 3.5rem); font-weight: 500; line-height: 1.18; color: var(--bordeaux); letter-spacing: -0.02em; margin-bottom: 1.625rem; }
+    .about-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2.25rem, 3.8vw, 3.5rem); font-weight: 500; line-height: 1.18; color: var(--bordeaux); letter-spacing: -0.02em; margin-bottom: 1.625rem; }
     .about-body { font-size: 1.05rem; font-weight: 300; line-height: 1.78; color: rgba(91,12,23,0.72); margin-bottom: 1.25rem; }
     .about-pills { display: flex; gap: 1.5rem; margin-top: 2.25rem; }
     .about-pill { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--bordeaux); display: flex; align-items: center; gap: 0.625rem; }
@@ -1143,7 +1152,7 @@
     }
     .pillars-inner { max-width: 1240px; margin: 0 auto; position: relative; }
     .pillars-header { text-align: center; margin-bottom: 4.5rem; }
-    .pillars-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 500; color: #fff; letter-spacing: -0.025em; margin-top: 0.75rem; }
+    .pillars-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2.5rem, 5vw, 4.25rem); font-weight: 500; color: #fff; letter-spacing: -0.025em; margin-top: 0.75rem; }
     .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
     .pillar-card {
       border: 1px solid rgba(248,189,206,0.15);
@@ -1153,7 +1162,7 @@
       overflow: hidden;
       transition: border-color 0.4s ease, transform 0.4s ease;
       cursor: pointer;
-      min-height: 460px;
+      min-height: clamp(340px, 36vw, 520px);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
@@ -1205,7 +1214,7 @@
     .pillar-card:hover { border-color: rgba(248,189,206,0.3); transform: translateY(-6px); }
     .pillar-card:hover::after { transform: scaleX(1); }
     .pillar-num {
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.15rem;
       font-weight: 600;
       font-feature-settings: "tnum" 1;
@@ -1228,7 +1237,7 @@
       transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
     }
     .pillar-card:hover .pillar-num { transform: rotate(0deg) scale(1.08); }
-    .pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 2.3rem; font-weight: 500; color: #fff; letter-spacing: -0.01em; margin-bottom: 1rem; }
+    .pillar-title { font-family: 'Montserrat', sans-serif; font-size: 2.3rem; font-weight: 500; color: #fff; letter-spacing: -0.01em; margin-bottom: 1rem; }
     .pillar-body { font-size: 1rem; font-weight: 300; line-height: 1.75; color: rgba(253,246,228,0.82); }
 
     /* FEATURES */
@@ -1244,7 +1253,7 @@
     }
     .features-inner { max-width: 1240px; margin: 0 auto; }
     .features-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3.5rem; }
-    .features-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.8vw, 3.375rem); font-weight: 500; color: var(--bordeaux); line-height: 1.18; letter-spacing: -0.02em; max-width: 520px; }
+    .features-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 3.8vw, 3.375rem); font-weight: 500; color: var(--bordeaux); line-height: 1.18; letter-spacing: -0.02em; max-width: 520px; }
     .btn-bordeaux {
       background: var(--bordeaux);
       color: #fff;
@@ -1261,7 +1270,7 @@
       box-shadow: 0 4px 20px rgba(91,12,23,0.28);
       cursor: pointer;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-bordeaux:hover { background: var(--bordeaux-deep); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(91,12,23,0.4); }
     .btn-bordeaux:active { transform: translateY(0); }
@@ -1285,7 +1294,7 @@
     .stages-inner { max-width: 1100px; margin: 0 auto; text-align: center; padding: 0 1.5rem; }
     .stages-label { color: var(--bordeaux); margin-bottom: 0.75rem; }
     .stages-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
       font-size: clamp(1.75rem, 3vw, 2.625rem);
       font-weight: 500;
@@ -1308,7 +1317,7 @@
     }
     .stages-track:hover { animation-play-state: paused; }
     .stages-item {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
       font-size: clamp(1.05rem, 1.3vw, 1.375rem);
       color: var(--bordeaux);
@@ -1481,7 +1490,7 @@
     .testimonials { background: var(--off-white); padding: 7rem 5rem; }
     .testimonials-inner { max-width: 1240px; margin: 0 auto; }
     .testimonials-header { text-align: center; margin-bottom: 4rem; }
-    .testimonials-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; color: var(--bordeaux); letter-spacing: -0.02em; margin-top: 0.625rem; }
+    .testimonials-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 500; color: var(--bordeaux); letter-spacing: -0.02em; margin-top: 0.625rem; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     .tcard {
       background: #fff;
@@ -1495,8 +1504,8 @@
     .tcard::before { content: ''; position: absolute; bottom: 0; left: 0; width: 3px; height: 0; background: linear-gradient(to top, var(--red), var(--pink)); transition: height 0.4s ease; }
     .tcard:hover { transform: translateY(-4px); box-shadow: 0 1px 0 rgba(91,12,23,0.06), 0 16px 50px rgba(91,12,23,0.12); }
     .tcard:hover::before { height: 100%; }
-    .tcard-quote { font-family: 'Cormorant Garamond', serif; font-size: 4.5rem; line-height: 0.55; color: var(--pink); margin-bottom: 1.375rem; }
-    .tcard-body { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.0625rem; font-weight: 400; line-height: 1.75; color: rgba(91,12,23,0.75); margin-bottom: 2rem; }
+    .tcard-quote { font-family: 'Montserrat', sans-serif; font-size: 4.5rem; line-height: 0.55; color: var(--pink); margin-bottom: 1.375rem; }
+    .tcard-body { font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 1.0625rem; font-weight: 400; line-height: 1.75; color: rgba(91,12,23,0.75); margin-bottom: 2rem; }
     .tcard-author { display: flex; align-items: center; gap: 0.875rem; }
     .tcard-avatar { width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
     .tcard-name { font-size: 0.98rem; font-weight: 600; color: var(--bordeaux); line-height: 1; margin-bottom: 0.3rem; }
@@ -1557,7 +1566,7 @@
     .tscroll-card:hover { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(91,12,23,0.06), 0 6px 18px rgba(91,12,23,0.13); }
     .tscroll-card:hover::after { height: 100%; }
     .tscroll-card-text {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
       font-size: 1.05rem;
       line-height: 1.72;
@@ -1588,7 +1597,7 @@
     .cta-deco { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.055; pointer-events: none; }
     .cta-inner { position: relative; }
     .cta-pre { font-size: 0.74rem; font-weight: 400; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(253,246,228,0.72); margin-bottom: 1.625rem; }
-    .cta-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 500; color: #fff; line-height: 1.07; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
+    .cta-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 7vw, 6rem); font-weight: 500; color: #fff; line-height: 1.07; letter-spacing: -0.025em; margin-bottom: 1.5rem; }
     .cta-sub { font-size: 1.05rem; font-weight: 300; color: rgba(253,246,228,0.82); letter-spacing: 0.02em; margin-bottom: 3rem; }
     .btn-white {
       background: #fff;
@@ -1605,7 +1614,7 @@
       box-shadow: 0 4px 32px rgba(0,0,0,0.22);
       cursor: pointer;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
     }
     .btn-white:hover { transform: translateY(-2px); box-shadow: 0 10px 48px rgba(0,0,0,0.35); }
     .btn-white:active { transform: translateY(0); }
@@ -1629,7 +1638,7 @@
 
     /* ═══ PAGE HERO (shared) ═══ */
     .page-hero {
-      min-height: 52vh;
+      min-height: clamp(420px, 52vh, 720px);
       background: var(--bordeaux);
       position: relative;
       display: grid;
@@ -1648,7 +1657,7 @@
     .page-hero-image {
       position: relative;
       height: 100%;
-      min-height: 52vh;
+      min-height: clamp(320px, 52vh, 720px);
       overflow: hidden;
     }
     .page-hero-image img {
@@ -1718,70 +1727,34 @@
     /* One-on-one hero: cap length at viewport */
     #page-one-on-one .page-hero { min-height: auto; max-height: 100vh; }
 
-    /* Coaching hero: true alpha-mask fade, no overlay artifacts */
+    /* Coaching hero: clean rounded image at all visible widths (>= 700px).
+       Below 700px the page-hero-image is hidden entirely by the responsive
+       block, so no mobile-fade styles are needed here. */
     #page-one-on-one .coaching-hero-image {
-      margin-left: -80px;
-      width: calc(100% + 80px);
-      /* mask-image makes the container itself fade from fully transparent on
-         the left to fully opaque on the right, the section's bordeaux
-         background shows through where alpha = 0, giving a perfect seamless
-         blend with zero visible edge at any vertical position */
-      -webkit-mask-image: linear-gradient(to right,
-        transparent       0%,
-        rgba(0,0,0,0.10)  5%,
-        rgba(0,0,0,0.25)  10%,
-        rgba(0,0,0,0.45)  16%,
-        rgba(0,0,0,0.65)  22%,
-        rgba(0,0,0,0.82)  28%,
-        rgba(0,0,0,0.94)  34%,
-        black             40%,
-        black             100%
-      );
-      mask-image: linear-gradient(to right,
-        transparent       0%,
-        rgba(0,0,0,0.10)  5%,
-        rgba(0,0,0,0.25)  10%,
-        rgba(0,0,0,0.45)  16%,
-        rgba(0,0,0,0.65)  22%,
-        rgba(0,0,0,0.82)  28%,
-        rgba(0,0,0,0.94)  34%,
-        black             40%,
-        black             100%
-      );
+      border-radius: 14px;
+      overflow: hidden;
+      margin: clamp(1rem, 3vw, 2rem) clamp(1rem, 2vw, 2rem) clamp(1rem, 3vw, 2rem) 0;
     }
-    #page-one-on-one .coaching-hero-image img {
-      opacity: 0.58;
-    }
-    /* Left overlay + top/bottom vignettes.
-       The overlay darkens the mid-transition zone so the partially-masked
-       photo matches the bordeaux tone, eliminating any visible band. */
     #page-one-on-one .coaching-hero-image::after {
-      background:
-        linear-gradient(to right,
-          rgba(61,8,16,0.90)  0%,
-          rgba(61,8,16,0.72)  8%,
-          rgba(61,8,16,0.48)  18%,
-          rgba(61,8,16,0.26)  28%,
-          rgba(61,8,16,0.10)  36%,
-          transparent         44%
-        ),
-        linear-gradient(to top,    rgba(30,5,12,0.52) 0%, transparent 40%),
-        linear-gradient(to bottom, rgba(30,5,12,0.22) 0%, transparent 24%);
+      display: none;
     }
-    @media (min-width: 901px) {
+    @media (min-width: 1025px) {
       #page-one-on-one .page-hero {
         min-height: 100vh !important;
         width: 100vw !important;
       }
       #page-one-on-one .coaching-hero-image {
         position: absolute !important;
-        top: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        left: 62% !important;
-        width: auto !important;
-        margin-left: 0 !important;
+        top: clamp(60px, 6.5vh, 75px) !important;
+        right: clamp(1rem, 2vw, 2.5rem) !important;
+        bottom: auto !important;
+        height: calc(100vh - clamp(120px, 13vh, 150px)) !important;
+        left: auto !important;
+        width: clamp(260px, 34vw, 560px) !important;
+        margin: 0 !important;
         transform: none !important;
+        border-radius: 24px !important;
+        overflow: hidden;
         -webkit-mask-image: none;
         mask-image: none;
       }
@@ -1863,7 +1836,7 @@
       }
     }
     .page-h1 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 500;
       line-height: 1.1;
@@ -1898,7 +1871,7 @@
       position: relative;
     }
     .about-dark-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2.25rem, 4vw, 3.75rem);
       font-weight: 500;
       line-height: 1.14;
@@ -1948,7 +1921,7 @@
       background: #fff;
     }
     .freedom-hub-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 4vw, 3.5rem);
       font-weight: 500;
       line-height: 1.18;
@@ -1972,7 +1945,7 @@
       border-radius: 2px;
       border: none;
       cursor: pointer;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       transition: background 0.25s ease, transform 0.2s ease;
       width: 100%;
       text-align: left;
@@ -1995,7 +1968,7 @@
       align-items: center;
     }
     .service-intro-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2.25rem, 4vw, 3.5rem);
       font-weight: 500;
       line-height: 1.14;
@@ -2008,7 +1981,7 @@
       border-radius: 3px;
       overflow: hidden;
     }
-    .service-intro-image img { width: 100%; height: 460px; object-fit: cover; object-position: top center; display: block; }
+    .service-intro-image img { width: 100%; height: clamp(260px, 42vw, 540px); object-fit: cover; object-position: top center; display: block; }
 
     /* VENUE / STAGES STRIP — scrolling marquee */
     .venues-strip {
@@ -2032,7 +2005,7 @@
     }
     .venues-track:hover { animation-play-state: paused; }
     .venues-track .venue {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-style: italic;
       font-size: clamp(1.1rem, 1.6vw, 1.45rem);
       color: var(--bordeaux);
@@ -2054,7 +2027,7 @@
     /* TOPICS / SPEAKING GRID */
     .topics-section { background: var(--pink); padding: 6rem 5rem; }
     .topics-inner { max-width: 1240px; margin: 0 auto; }
-    .topics-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 500; color: var(--bordeaux); letter-spacing: -0.02em; margin-bottom: 3rem; text-align: center; }
+    .topics-h2 { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 4vw, 3.25rem); font-weight: 500; color: var(--bordeaux); letter-spacing: -0.02em; margin-bottom: 3rem; text-align: center; }
     .topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     .topic-card {
       background: rgba(255,255,255,0.55);
@@ -2075,7 +2048,7 @@
     }
     .quote-band-inner { max-width: 900px; margin: 0 auto; }
     .quote-band-text {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(1.5rem, 3vw, 2.5rem);
       font-style: italic;
       font-weight: 400;
@@ -2133,7 +2106,7 @@
       justify-content: center;
     }
     .contact-form-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 3.5vw, 3rem);
       font-weight: 500;
       color: #fff;
@@ -2160,7 +2133,7 @@
       color: #fff;
       font-size: 0.98rem;
       font-weight: 300;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       letter-spacing: 0.02em;
       outline: none;
       transition: border-color 0.25s ease, background 0.25s ease;
@@ -2280,7 +2253,7 @@
     }
     .pillar-card.reveal-left.visible { transform: translateX(0); }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE — typography/padding at tablet+, layout stacking only at true mobile */
     @media (max-width: 1024px) {
       .nav, .nav.scrolled { padding-left: 1.5rem; padding-right: 1.5rem; }
       .hero-content { padding: 8rem 1.5rem 4rem 1.5rem; }
@@ -2289,29 +2262,31 @@
       .stat-item { border-right: none; padding: 0; }
       .stat-item + .stat-item { padding-left: 0; }
       .about, .pillars, .features, .testimonials, .cta-section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .about-mark-wrap { display: none; }
-      .pillars-grid, .features-grid, .testimonials-grid, .topics-grid { grid-template-columns: 1fr; }
-      .team-topics-grid { grid-template-columns: 1fr; }
       .features-header { flex-direction: column; gap: 2rem; align-items: flex-start; }
       .footer-top { flex-direction: column; gap: 3rem; }
       .footer-links { flex-wrap: wrap; gap: 2rem; }
       .nav-links { display: none; }
+      .topics-section, .about-dark, .quote-band { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .service-intro { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .video-section { padding: 4rem 1.5rem; }
+      .video-section-h2 { font-size: 2rem; }
+    }
+    /* True mobile: stack grids and drop side-by-side hero imagery */
+    @media (max-width: 700px) {
+      .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .about-mark-wrap { display: none; }
+      .pillars-grid, .features-grid, .testimonials-grid, .topics-grid { grid-template-columns: 1fr; }
+      .team-topics-grid { grid-template-columns: 1fr; }
       .page-hero { grid-template-columns: 1fr; }
       .page-hero-image { display: none; }
       .freedom-hub { grid-template-columns: 1fr; }
       .freedom-hub-image { display: none; }
       .freedom-hub-content { padding: 8rem 1.5rem 5rem; }
       .service-intro-inner { grid-template-columns: 1fr; gap: 3rem; }
-      .service-intro-image img { height: 280px; }
       .about-dark-inner { grid-template-columns: 1fr; gap: 3rem; }
       .contact-hero { grid-template-columns: 1fr; }
       .contact-info-wrap { display: none; }
       .contact-form-wrap { padding: 7rem 1.5rem 5rem; }
-      .topics-section, .about-dark, .quote-band { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .service-intro { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .video-section { padding: 4rem 1.5rem; }
-      .video-section-h2 { font-size: 2rem; }
     }
 
     /* VIDEO SECTION */
@@ -2325,7 +2300,7 @@
       margin: 0 auto;
     }
     .video-section-h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 2.75rem;
       font-weight: 600;
       color: var(--bordeaux);
@@ -2355,7 +2330,7 @@
       position: relative;
       flex: 0 0 auto;
       width: 100%;
-      max-width: 360px;
+      max-width: clamp(220px, 32vw, 360px);
       aspect-ratio: 9 / 16;
       overflow: visible;
     }
@@ -2455,7 +2430,6 @@
       transform: scale(1.25);
     }
     @media (max-width: 760px) {
-      .video-frame { max-width: 260px; }
       .video-row { gap: 0.5rem; }
       .video-arrow { width: 42px; height: 42px; }
       .video-slide.is-prev { transform: translateX(-58%) scale(0.68); }
@@ -2597,7 +2571,7 @@
       border: none;
       border-bottom: 1px solid rgba(248,189,206,0.07);
       text-align: left;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       padding: 1.1rem 0;
       display: flex;
       align-items: center;
@@ -2640,7 +2614,7 @@
       display: block;
       cursor: pointer;
       border: none;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       box-shadow: 0 4px 20px rgba(230,41,75,0.35);
       opacity: 0;
       transform: translateY(10px);
@@ -2720,8 +2694,7 @@
 
     /* ══════════════════════════════════════════════════
        INTRO OVERLAY, looping word animation
-       Cycle: 5 s  |  LIFE 0–25%  MINDSET 25–50%
-                      BIZ COACH 50–75%  CHRISTINE 75–100%
+       Cycle: 3 s  |  LIFE 0–33%  MINDSET 33–66%  BIZ COACH 66–100%
        ══════════════════════════════════════════════════ */
     #intro-overlay {
       position: fixed;
@@ -2736,9 +2709,9 @@
       inset: 0;
       z-index: 0;
       background:
-        radial-gradient(ellipse 72% 55% at 50% 50%, rgba(255,240,235,0.22) 0%, transparent 65%),
-        radial-gradient(ellipse 100% 100% at 50% 50%, rgba(91,12,23,0.05) 55%, rgba(91,12,23,0.13) 100%),
-        #f995b3;
+        radial-gradient(58% 55% at 50% 38%, rgba(230,41,75,0.42) 0%, transparent 65%),
+        radial-gradient(50% 50% at 80% 78%, rgba(91,12,23,0.85) 0%, transparent 70%),
+        var(--bordeaux-deep);
       will-change: opacity;
     }
     .intro-bg::before {
@@ -2755,7 +2728,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      box-shadow: inset 0 0 140px rgba(91,12,23,0.09);
+      background: radial-gradient(120% 80% at 50% 110%, rgba(0,0,0,0.55) 0%, transparent 60%);
     }
     .intro-stage {
       position: absolute;
@@ -2782,66 +2755,46 @@
     /* Pause all intro animations until JS starts them, so CSS + setTimeout stay in sync */
     #intro-overlay .intro-life,
     #intro-overlay .intro-mindset,
-    #intro-overlay .intro-biz,
-    #intro-overlay .intro-christine {
+    #intro-overlay .intro-biz {
       animation-play-state: paused;
     }
     #intro-overlay.is-playing .intro-life,
     #intro-overlay.is-playing .intro-mindset,
-    #intro-overlay.is-playing .intro-biz,
-    #intro-overlay.is-playing .intro-christine {
+    #intro-overlay.is-playing .intro-biz {
       animation-play-state: running;
     }
     .intro-life {
-      font-family: 'Times New Roman', Times, serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 5vw, 3.8rem);
       font-weight: 400;
       letter-spacing: 0.45em;
       text-indent: 0.45em;
       text-transform: uppercase;
-      color: var(--bordeaux);
+      color: var(--cream);
       line-height: 1;
       animation: introLife 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     .intro-mindset {
-      font-family: 'Times New Roman', Times, serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 5vw, 3.8rem);
       font-weight: 400;
       letter-spacing: 0.28em;
       text-indent: 0.28em;
       text-transform: uppercase;
-      color: var(--bordeaux);
+      color: var(--cream);
       line-height: 1;
       animation: introMindset 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     .intro-biz {
-      font-family: 'Times New Roman', Times, serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 5vw, 3.8rem);
       font-weight: 400;
       letter-spacing: 0.18em;
       text-indent: 0.18em;
       text-transform: uppercase;
-      color: var(--bordeaux);
+      color: var(--cream);
       line-height: 1;
       animation: introBiz 3s cubic-bezier(0.16,1,0.3,1) infinite;
-    }
-    /* Christine — same pattern as LIFE/MINDSET/BIZ: one element, one keyframe */
-    .intro-christine {
-      position: absolute;
-      top: 50%;
-      left: 0; right: 0;
-      text-align: center;
-      padding: 0 2rem;
-      opacity: 0;
-      will-change: transform, opacity;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
-      font-family: 'Great Vibes', cursive;
-      font-size: clamp(2.8rem, 7vw, 5.5rem);
-      font-weight: 400;
-      color: var(--bordeaux);
-      line-height: 1;
-      animation: introChristine 3s cubic-bezier(0.16,1,0.3,1) infinite;
     }
     /* Skip hint */
     .intro-skip {
@@ -2850,50 +2803,42 @@
       left: 50%;
       transform: translateX(-50%);
       z-index: 3;
-      font-family: 'Jost', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 0.5rem;
       font-weight: 300;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(91,12,23,0.3);
+      color: rgba(253,246,240,0.5);
       white-space: nowrap;
       opacity: 0;
       animation: introSkipFade 0.8s ease 1.2s both;
     }
 
     /* ── Keyframes (3s cycle, 3D parallax)────────
-       LIFE:            0 – 25%  (0 – 0.75 s)
-       MINDSET:        25 – 50%  (0.75 – 1.5 s)
-       BUSINESS COACH: 50 – 75%  (1.5 – 2.25 s)
-       CHRISTINE:      75 – 100% (2.25 – 3 s)
+       LIFE:            0 – 33.3%  (0 – 1 s)
+       MINDSET:      33.3 – 66.6%  (1 – 2 s)
+       BUSINESS COACH: 66.6 – 100% (2 – 3 s)
        Each word enters from -400px Z with backward tilt,
        settles to center, then exits forward with forward tilt.
        ──────────────────────────────────────── */
     @keyframes introLife {
       0%          { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
-      5%          { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      20%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      24%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
-      25%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      7%          { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      27%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      32%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
+      33%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
     @keyframes introMindset {
-      0%, 25%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
-      30%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      45%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      49%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
-      50%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      0%, 33%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      40%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      60%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      65%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
+      66%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
     @keyframes introBiz {
-      0%, 50%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
-      55%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      70%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      74%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
-      75%, 100%   { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
-    }
-    @keyframes introChristine {
-      0%, 75%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
-      80%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
-      95%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      0%, 66%     { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
+      73%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
+      93%         { opacity: 1; transform: translateY(-50%) translateZ(0) rotateX(0deg); }
       99%         { opacity: 0; transform: translateY(calc(-50% - 20px)) translateZ(320px) rotateX(22deg); }
       100%        { opacity: 0; transform: translateY(calc(-50% + 28px)) translateZ(-400px) rotateX(-18deg); }
     }
@@ -2971,7 +2916,7 @@
         justify-content: center;
         gap: 0.2rem;
         color: rgba(253,246,228,0.6);
-        font-family: 'Jost', sans-serif;
+        font-family: 'Montserrat', sans-serif;
         font-size: 0.62rem;
         font-weight: 500;
         letter-spacing: 0.06em;
@@ -3104,7 +3049,6 @@
       <span class="intro-life">LIFE</span>
       <span class="intro-mindset">MINDSET</span>
       <span class="intro-biz">BUSINESS COACH</span>
-      <span class="intro-christine">Christine</span>
     </div>
     <span class="intro-skip">click to skip</span>
   </div>
@@ -3278,7 +3222,7 @@
 
         <!-- Panel 0: Brand intro -->
         <div class="fm-panel fm-panel-intro is-active" id="fm-panel-0">
-          <div class="intro-eyebrow">Life <span style="opacity:.55">·</span> Mindset <span style="opacity:.55">·</span> Business Coach</div>
+          <div class="intro-eyebrow">Soulful <span style="opacity:.55">·</span> Strong <span style="opacity:.55">·</span> Strategic</div>
           <div class="hero-trust">
             <span class="hero-trust-quote">"A life-changing experience, I feel stronger, clearer, and more aligned than ever."</span>
             <span class="hero-trust-attr">Sarah M. - Coaching Client</span>
@@ -3473,64 +3417,6 @@
         </div>
       </div>
     </section>
-
-    <!-- FEATURES (coaching areas) -->
-    <section class="features">
-      <div class="features-inner">
-        <div class="features-header reveal">
-          <h2 class="features-h2">Discover the areas you want to work on.</h2>
-          <button class="btn-bordeaux" onclick="showPage('one-on-one')">Explore Coaching</button>
-        </div>
-        <div class="features-grid">
-          <div class="feature-card reveal">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </div>
-            <div>
-              <h3 class="feature-h3">Holistic Health &amp; Well-being</h3>
-              <p class="feature-p">Align your body, mind, and spirit for total wellness. Build sustainable habits that support your physical and emotional health from the inside out.</p>
-            </div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:.1s">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            </div>
-            <div>
-              <h3 class="feature-h3">Purposeful Living &amp; Balance</h3>
-              <p class="feature-p">Discover your true purpose and design a life that reflects your deepest values. Create harmony between your personal and professional worlds.</p>
-            </div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:.15s">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div>
-              <h3 class="feature-h3">Relationships &amp; Connection</h3>
-              <p class="feature-p">Build deeper, more authentic connections with the people who matter most. Learn to communicate with clarity, empathy, and genuine confidence.</p>
-            </div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:.2s">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            </div>
-            <div>
-              <h3 class="feature-h3">Habits &amp; Self-Mastery</h3>
-              <p class="feature-p">Rewire your daily rituals and routines to align with the life you truly want. Master the micro-habits that create macro results across every area of life.</p>
-            </div>
-          </div>
-          <div class="feature-card reveal" style="transition-delay:.25s;grid-column:1/-1;">
-            <div class="feature-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            </div>
-            <div>
-              <h3 class="feature-h3">Financial Abundance &amp; Success</h3>
-              <p class="feature-p">Develop a healthy, empowered relationship with money and success. Shift your mindset from scarcity to abundance, and build the financial foundation for the life you deserve.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
 
     <!-- VIDEO SECTION -->
     <section class="video-section">
@@ -4099,45 +3985,57 @@
     </section>
 
     <!-- COACHING AREAS -->
-    <section class="topics-section">
-      <div class="topics-inner">
-        <div class="section-label" style="text-align:center;margin-bottom:0.75rem;">What We Work On</div>
-        <h2 class="topics-h2">Discover the areas you want to work on:</h2>
-        <div class="topics-grid">
-          <div class="topic-card reveal">
-            <div class="topic-icon">
+    <section class="features">
+      <div class="features-inner">
+        <div class="features-header reveal">
+          <h2 class="features-h2">Discover the areas you want to work on.</h2>
+          <button class="btn-bordeaux" onclick="showPage('contact')">Book a Session</button>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card reveal">
+            <div class="feature-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </div>
-            <h3 class="topic-h3">Holistic Health &amp; Well-being</h3>
-            <p class="topic-p">Align your body, mind, and spirit for total wellness. Build sustainable habits that support your physical and emotional health from the inside out.</p>
+            <div>
+              <h3 class="feature-h3">Holistic Health &amp; Well-being</h3>
+              <p class="feature-p">Align your body, mind, and spirit for total wellness. Build sustainable habits that support your physical and emotional health from the inside out.</p>
+            </div>
           </div>
-          <div class="topic-card reveal" style="transition-delay:.08s">
-            <div class="topic-icon">
+          <div class="feature-card reveal" style="transition-delay:.1s">
+            <div class="feature-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
             </div>
-            <h3 class="topic-h3">Purposeful Living &amp; Balance</h3>
-            <p class="topic-p">Discover your true purpose and design a life that reflects your deepest values. Create harmony between your personal and professional worlds.</p>
+            <div>
+              <h3 class="feature-h3">Purposeful Living &amp; Balance</h3>
+              <p class="feature-p">Discover your true purpose and design a life that reflects your deepest values. Create harmony between your personal and professional worlds.</p>
+            </div>
           </div>
-          <div class="topic-card reveal" style="transition-delay:.16s">
-            <div class="topic-icon">
+          <div class="feature-card reveal" style="transition-delay:.15s">
+            <div class="feature-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <h3 class="topic-h3">Relationships &amp; Connection</h3>
-            <p class="topic-p">Build deeper, more authentic connections with the people who matter most. Learn to communicate with clarity, empathy, and genuine confidence.</p>
+            <div>
+              <h3 class="feature-h3">Relationships &amp; Connection</h3>
+              <p class="feature-p">Build deeper, more authentic connections with the people who matter most. Learn to communicate with clarity, empathy, and genuine confidence.</p>
+            </div>
           </div>
-          <div class="topic-card reveal" style="transition-delay:.24s">
-            <div class="topic-icon">
+          <div class="feature-card reveal" style="transition-delay:.2s">
+            <div class="feature-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             </div>
-            <h3 class="topic-h3">Habits &amp; Self-Mastery</h3>
-            <p class="topic-p">Rewire your daily rituals and routines to align with the life you truly want. Master the micro-habits that create macro results across every area of life.</p>
+            <div>
+              <h3 class="feature-h3">Habits &amp; Self-Mastery</h3>
+              <p class="feature-p">Rewire your daily rituals and routines to align with the life you truly want. Master the micro-habits that create macro results across every area of life.</p>
+            </div>
           </div>
-          <div class="topic-card reveal" style="transition-delay:.32s">
-            <div class="topic-icon">
+          <div class="feature-card reveal" style="transition-delay:.25s;grid-column:1/-1;">
+            <div class="feature-icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f995b3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <h3 class="topic-h3">Financial Abundance &amp; Success</h3>
-            <p class="topic-p">Develop a healthy, empowered relationship with money and success. Shift your mindset from scarcity to abundance and build the foundation you deserve.</p>
+            <div>
+              <h3 class="feature-h3">Financial Abundance &amp; Success</h3>
+              <p class="feature-p">Develop a healthy, empowered relationship with money and success. Shift your mindset from scarcity to abundance, and build the financial foundation for the life you deserve.</p>
+            </div>
           </div>
         </div>
       </div>

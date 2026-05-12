@@ -1,4 +1,5 @@
     // ══════ SPA ROUTER ══════
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const FM_PAGE_META = {
       home:             { title: 'FreeDoMind — Life, Mindset & Business Coaching by Christine Borg', description: 'Life, mindset and business coaching with Christine Borg. Empowering minds to break through limits and live with purpose, freedom and clarity.' },
       about:            { title: 'About Christine Borg — FreeDoMind',               description: 'Meet Christine Borg — life coach, speaker and trainer on a mission to transform minds and lives, one breakthrough at a time.' },
@@ -25,11 +26,18 @@
       });
     }
 
+    function scrollPageToTop() {
+      if (window.fmLenis) window.fmLenis.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
     function showPage(id, skipPush) {
       const target = document.getElementById('page-' + id);
       // Already on this page → just scroll up, skip the heavy swap (saves ~190ms+)
       if (target && target.classList.contains('active') && !skipPush) {
-        window.scrollTo({ top: 0, behavior: 'auto' });
+        scrollPageToTop();
         return;
       }
       const prevActive = document.querySelector('.page.active');
@@ -38,7 +46,7 @@
       if (target) target.classList.add('active');
       fmApplyPageMeta(id);
       if (!skipPush) history.pushState({ page: id }, '', '#' + id);
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      scrollPageToTop();
 
       // Update nav active state (top + mobile bottom nav)
       document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
@@ -84,7 +92,7 @@
       }
 
       // Re-run reveal for new page content (rAF over setTimeout — runs in same frame as paint)
-      requestAnimationFrame(() => initReveal());
+      requestAnimationFrame(() => { initReveal(); scrollPageToTop(); });
 
       // Notify motion system
       window.dispatchEvent(new CustomEvent('fm-page-changed', { detail: { page: id } }));
@@ -569,7 +577,7 @@
           // Initial state, xPercent/yPercent handles the -50% centering since GSAP
           // owns the transform string after this point.
           gsap.set(letterM,   { y: 0, opacity: 1 });
-          gsap.set(logo,      { xPercent: -50, yPercent: -50, x: 0, y: -150, rotation: 0, scale: 0.62 });
+          gsap.set(logo,      { xPercent: -50, yPercent: -50, x: 0, y: -window.innerHeight * 0.104, rotation: 0, scale: 0.62 });
           gsap.set(panels[0], { opacity: 1 });
           gsap.set([panels[1], panels[2], panels[3]], { opacity: 0 });
 
@@ -676,7 +684,11 @@
             camera.updateProjectionMatrix();
           }
           sizeRenderer();
-          new ResizeObserver(function() { sizeRenderer(); if (window._fmDirty3D) window._fmDirty3D(); }).observe(stage);
+          new ResizeObserver(function() {
+            sizeRenderer();
+            if (window._fmResize3DLogo) window._fmResize3DLogo();
+            if (window._fmDirty3D) window._fmDirty3D();
+          }).observe(stage);
 
           var loader = new THREE.SVGLoader();
           loader.load('brand_assets/freedomind-logo-vector.svg', function(data) {
@@ -720,14 +732,35 @@
               m.geometry.translate(-center.x, -center.y, -size.z / 2);
             });
 
-            // Fit: target width ≈ 820 CSS px at rest (scale 1.0), so the existing
-            // scale keyframes (0.55 → 1.45) swing the logo between ~450 and ~1190 px.
+            // Fit: target width scales with whichever viewport dimension shrinks
+            // — width OR height — so the logo shrinks no matter which way you resize.
             var maxDim = Math.max(size.x, size.y);
-            var FIT = 820 / maxDim;
+            function computeFit() {
+              var r = stage.getBoundingClientRect();
+              var targetW = Math.min(820, r.width * 0.34, r.height * 0.569);
+              return targetW / maxDim;
+            }
+            var FIT = computeFit();
             function setScale(s) {
               group.scale.set(FIT * s, -FIT * s, FIT * s);
             }
             setScale(1);
+
+            // Compute the resting y position based on the current viewport.
+            function computeRestY() {
+              return Math.min(window.innerWidth * 0.0625, window.innerHeight * 0.104);
+            }
+
+            // Re-apply FIT and rest position when the stage resizes.
+            window._fmResize3DLogo = function() {
+              FIT = computeFit();
+              setScale(group.userData && group.userData.s != null ? group.userData.s : 1);
+              // If we're near the start of the scroll (resting pose), update y too.
+              if (window.scrollY < 50) {
+                group.position.y = computeRestY();
+              }
+              needsRender = true;
+            };
 
             stage.classList.add('is-3d-ready');
 
@@ -759,10 +792,11 @@
             });
 
             // 0 → 0.28 : intro drift left + first Y revolution
+            // Rest y scales with whichever viewport dimension is smaller.
             meshTL.fromTo(group.position,
-              { x: 0, y: 150, z: 0 },
+              { x: 0, y: computeRestY(), z: 0 },
               { x: -420, y: 0, ease: 'power3.inOut', duration: 0.28 }, 0);
-            meshTL.fromTo(group.userData, { s: 0.55 },
+            meshTL.fromTo(group.userData, { s: 0.85 },
               { s: 1.1, ease: 'power3.inOut', duration: 0.28, onUpdate: applyScale }, 0);
             meshTL.fromTo(group.rotation, { x: 0, y: 0 },
               { y: -TWO_PI, ease: 'power3.inOut', duration: 0.28 }, 0);
