@@ -11,3 +11,6 @@ freedomind_assets.file/*
 !freedomind_assets.file/video-output-3B06FFB0-849B-4AEF-8A91-AC485CEB2D42-1.mp4
 !freedomind_assets.file/video-output-6F4E2EC0-757E-4706-B983-FCA30B381D34-1.mp4
 !freedomind_assets.file/video-output-58FDA77A-3545-4CFC-9C94-730466D6CFB0-1.mp4
+
+# Raw source originals (converted to .webp in brand_assets/)
+wetransfer*/

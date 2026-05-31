@@ -1,13 +1,13 @@
     // ══════ SPA ROUTER ══════
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     const FM_PAGE_META = {
-      home:             { title: 'FreeDoMind — Life, Mindset & Business Coaching by Christine Borg', description: 'Life, mindset and business coaching with Christine Borg. Empowering minds to break through limits and live with purpose, freedom and clarity.' },
-      about:            { title: 'About Christine Borg — FreeDoMind',               description: 'Meet Christine Borg — life coach, speaker and trainer on a mission to transform minds and lives, one breakthrough at a time.' },
-      freedom:          { title: 'The Freedom Hub — FreeDoMind',                    description: 'Explore the Freedom Hub — every way Christine Borg helps you unlock potential, personally and professionally.' },
-      'one-on-one':     { title: 'One-On-One Coaching — FreeDoMind',                description: 'One-on-one coaching with Christine Borg. Break through limiting beliefs and create lasting transformation in every area of life.' },
-      'team-coaching':  { title: 'Team Coaching & Workshops — FreeDoMind',          description: 'Team coaching and workshops with Christine Borg. Transform how your team thinks, leads and achieves — build a culture of excellence.' },
-      speaking:         { title: 'Speaking & Keynotes — FreeDoMind',                description: 'Book Christine Borg to speak. Electrifying, heart-centred keynotes with practical tools to live and lead with freedom and purpose.' },
-      contact:          { title: 'Contact Christine — FreeDoMind',                  description: "Get in touch with Christine Borg. Book a discovery call, request a talk, or say hello — let's start your journey." }
+      home:             { title: 'Freedomind - Life, Mindset & Business Coaching by Christine Borg', description: 'Life, mindset and business coaching with Christine Borg. Empowering minds to break through limits and live with purpose, freedom and clarity.' },
+      about:            { title: 'About Christine Borg - Freedomind',               description: 'Meet Christine Borg, life coach, speaker and trainer on a mission to transform minds and lives, one breakthrough at a time.' },
+      'one-on-one':     { title: 'One-On-One Coaching - Freedomind',                description: 'One-on-one coaching with Christine Borg. Break through limiting beliefs and create lasting transformation in every area of life.' },
+      'team-coaching':  { title: 'Corporate Workshops & Training - Freedomind',          description: 'Corporate workshops and training with Christine Borg. Transform how your team thinks, leads and achieves, build a culture of excellence.' },
+      speaking:         { title: 'Speaking & Keynotes - Freedomind',                description: 'Book Christine Borg to speak. Electrifying, heart-centred keynotes with practical tools to live and lead with freedom and purpose.' },
+      retreats:         { title: 'Retreats & Events - Freedomind',                  description: 'Transformational retreats and events curated by Christine Borg, immersive experiences designed to inspire connection, growth, wellbeing and personal empowerment.' },
+      contact:          { title: 'Contact Christine - Freedomind',                  description: "Get in touch with Christine Borg. Book a discovery call, request a talk, or say hello, let's start your journey." }
     };
     function fmApplyPageMeta(id) {
       const meta = FM_PAGE_META[id];
@@ -54,32 +54,14 @@
       });
       document.querySelectorAll('.bottom-nav-item[data-page]').forEach(b => {
         // Highlight bottom-nav for matching page; sub-pages roll up to "freedom"
-        const matchPage = id === 'one-on-one' || id === 'team-coaching' || id === 'speaking' ? 'freedom' : id;
+        const matchPage = id === 'one-on-one' || id === 'team-coaching' || id === 'speaking' || id === 'retreats' ? 'freedom' : id;
         b.classList.toggle('is-active', b.dataset.page === matchPage);
       });
-
-      // Re-trigger coaching hero image animation on each visit
-      if (id === 'one-on-one') {
-        const heroImg = document.querySelector('#page-one-on-one .coaching-hero-image img');
-        if (heroImg) {
-          heroImg.classList.remove('hero-loaded');
-          heroImg.style.animation = 'none';
-          heroImg.offsetHeight; // reflow
-          heroImg.style.animation = '';
-          if (heroImg.complete) {
-            setTimeout(() => heroImg.classList.add('hero-loaded'), 1260);
-          } else {
-            heroImg.addEventListener('load', () => {
-              setTimeout(() => heroImg.classList.add('hero-loaded'), 1260);
-            }, { once: true });
-          }
-        }
-      }
 
       // Toggle transparent nav for full-bleed photo hero pages
       const nav = document.getElementById('main-nav');
       if (nav) {
-        const photoHeroPages = ['home', 'about', 'one-on-one', 'team-coaching', 'speaking', 'contact'];
+        const photoHeroPages = ['home', 'about', 'one-on-one', 'team-coaching', 'speaking', 'retreats', 'contact'];
         nav.classList.toggle('nav-photo-hero', photoHeroPages.includes(id));
         // Reset inline nav styles immediately so lerpNav recalculates from scrollY=0
         nav.style.background = '';
@@ -91,14 +73,14 @@
         if (typeof lerpNav === 'function') lerpNav();
       }
 
-      // Re-run reveal for new page content (rAF over setTimeout — runs in same frame as paint)
+      // Re-run reveal for new page content (rAF over setTimeout, runs in same frame as paint)
       requestAnimationFrame(() => { initReveal(); scrollPageToTop(); });
 
       // Notify motion system
       window.dispatchEvent(new CustomEvent('fm-page-changed', { detail: { page: id } }));
 
       // ScrollTrigger.refresh recalculates ALL trigger positions (expensive). Only home has triggers.
-      // Skip refresh entirely when navigating between non-home pages — pure waste otherwise.
+      // Skip refresh entirely when navigating between non-home pages, pure waste otherwise.
       if (typeof ScrollTrigger !== 'undefined' && (id === 'home' || prevId === 'home')) {
         setTimeout(() => ScrollTrigger.refresh(), 120);
       }
@@ -593,7 +575,7 @@
             if (heroTrust) heroTrust.classList.toggle('is-hidden', idx !== 0);
           }
 
-          // Master scrub timeline — drives panel crossfades and stage tint with scroll.
+          // Master scrub timeline, drives panel crossfades and stage tint with scroll.
           var lastStage = -1;
           var pinTL = gsap.timeline({
             scrollTrigger: {
@@ -615,7 +597,7 @@
             }
           });
 
-          // Panel crossfades — sharp opacity flips at stage boundaries
+          // Panel crossfades, sharp opacity flips at stage boundaries
           pinTL.to(panels[0], { opacity: 0, duration: 0.06, ease: 'none' }, 0.22);
           pinTL.fromTo(panels[1], { opacity: 0 }, { opacity: 1, duration: 0.06, ease: 'none' }, 0.28);
           pinTL.to(panels[1], { opacity: 0, duration: 0.06, ease: 'none' }, 0.49);
@@ -635,7 +617,7 @@
 
           // ── 3D LOGO: Three.js extruded mesh ──────────────────────────
           // Canvas is full-stage so the mesh can orbit without being clipped by a small wrapper.
-          // Three.js is lazy-loaded (see index.html) — try now, retry when ready event fires.
+          // Three.js is lazy-loaded (see index.html), try now, retry when ready event fires.
           if (typeof THREE !== 'undefined' && THREE.SVGLoader) {
             initLogo3D(hero, stage);
           } else {
@@ -733,7 +715,7 @@
             });
 
             // Fit: target width scales with whichever viewport dimension shrinks
-            // — width OR height — so the logo shrinks no matter which way you resize.
+            //, width OR height, so the logo shrinks no matter which way you resize.
             var maxDim = Math.max(size.x, size.y);
             function computeFit() {
               var r = stage.getBoundingClientRect();
@@ -764,7 +746,7 @@
 
             stage.classList.add('is-3d-ready');
 
-            // Render loop — dirty-flag pattern. Only renders when something changed.
+            // Render loop, dirty-flag pattern. Only renders when something changed.
             // Skips ~95% of frames when scroll is idle. Marked dirty by mesh updates + resize.
             var needsRender = true;
             window._fmDirty3D = function() { needsRender = true; };
@@ -897,7 +879,7 @@
           form.classList.remove('is-sending');
           if (ok) {
             form.classList.add('is-sent');
-            setStatus('success', "Thank you — your message has been sent. Christine will be in touch shortly.");
+            setStatus('success', "Thank you, your message has been sent. Christine will be in touch shortly.");
           } else {
             if (submitLabel) submitLabel.textContent = 'Submit Form';
             setStatus('error', (data && data.message) || 'Something went wrong. Please try again or email info.christineborg@gmail.com directly.');
