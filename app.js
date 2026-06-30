@@ -409,6 +409,15 @@
         if (prefersReduced) lenis.destroy();
         window.fmLenis = prefersReduced ? null : lenis;
 
+        // Always boot at the very top. A reload can restore a mid-page scroll
+        // position (scrollRestoration='manual' is unreliable once the Lenis
+        // scrollerProxy owns scrolling), which makes the two pinned hero scrub
+        // timelines compute their start/end against different offsets and desync —
+        // the logo animation then freezes mid-pose. Resetting to 0 BEFORE any
+        // ScrollTrigger is built keeps pinTL and the async meshTL in agreement.
+        if (!prefersReduced) lenis.scrollTo(0, { immediate: true, force: true });
+        window.scrollTo(0, 0);
+
         // Keep ScrollTrigger in sync with Lenis
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
@@ -821,6 +830,17 @@
                 setTimeout(sizeRenderer, 60);
               }
             });
+
+            // meshTL is built async (after Three.js + SVG load) while pinTL was
+            // built synchronously on window.load. Refresh now so BOTH hero triggers
+            // recompute their start/end from the same scroll position and stay in
+            // sync — prevents the reload-while-scrolled desync that froze the logo.
+            // Then snap to the top so the hero always boots at stage 0 (a reload can
+            // restore a mid-page scroll that Lenis re-applies past the early reset).
+            ScrollTrigger.refresh();
+            if (window.fmLenis) window.fmLenis.scrollTo(0, { immediate: true, force: true });
+            window.scrollTo(0, 0);
+            ScrollTrigger.update();
           }, undefined, function(err) {
             console.warn('3D logo SVG failed to load, keeping PNG fallback', err);
           });
