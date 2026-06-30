@@ -544,15 +544,14 @@
           var logo      = document.getElementById('fm-logo');
           var letterM   = document.getElementById('fm-letter-m');
           var panels    = [0,1,2,3].map(function(i){ return document.getElementById('fm-panel-'+i); });
-          var stageItems = document.querySelectorAll('#fm-stage-rail .fm-stage-item');
           var scrollCue = document.getElementById('fm-scroll-cue');
 
           // Per-stage palette, wing fills + indicator copy. Mesh handled by class toggles.
           var palette = [
-            { wingL: '#f995b3', wingR: '#e61e2e', vP: '#f995b3', vR: '#e61e2e', tag: 'Welcome',     stageNum: '01' },
-            { wingL: '#e61e2e', wingR: '#7a1525', vP: '#c8193a', vR: '#5b0c17', tag: 'Inner self',  stageNum: '02' },
-            { wingL: '#fdf6f0', wingR: '#f995b3', vP: '#eda8bc', vR: '#e61e2e', tag: 'Daily flow',  stageNum: '03' },
-            { wingL: '#f995b3', wingR: '#e61e2e', vP: '#f995b3', vR: '#e61e2e', tag: 'Take flight', stageNum: '04' }
+            { wingL: '#f995b3', wingR: '#e61e2e', vP: '#f995b3', vR: '#e61e2e' },
+            { wingL: '#e61e2e', wingR: '#7a1525', vP: '#c8193a', vR: '#5b0c17' },
+            { wingL: '#fdf6f0', wingR: '#f995b3', vP: '#eda8bc', vR: '#e61e2e' },
+            { wingL: '#f995b3', wingR: '#e61e2e', vP: '#f995b3', vR: '#e61e2e' }
           ];
           var meshLayers = stage.querySelectorAll('.fm-mesh');
 
@@ -566,7 +565,6 @@
           var heroTrust = stage.querySelector('.hero-welcome');
           function tintTo(idx) {
             meshLayers.forEach(function(m, i) { m.classList.toggle('is-on', i === idx); });
-            stageItems.forEach(function(it, i) { it.classList.toggle('is-active', i === idx); });
             document.body.classList.remove('fm-stage-0','fm-stage-1','fm-stage-2','fm-stage-3');
             document.body.classList.add('fm-stage-' + idx);
             panels.forEach(function(panel, i) {

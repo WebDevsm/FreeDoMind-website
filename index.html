@@ -659,65 +659,6 @@
       will-change: transform, opacity;
     }
 
-    /* Stage rail, vertical section index, lightweight.info style */
-    .fm-stage-rail {
-      position: absolute;
-      right: clamp(1.25rem, 2.5vw, 2.75rem);
-      top: 0;
-      bottom: 0;
-      z-index: 6;
-      pointer-events: none;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 3.25rem 0;
-      width: 9rem;
-    }
-    .fm-stage-rail::before {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 3.5rem;
-      bottom: 3.5rem;
-      width: 1px;
-      background: rgba(255,255,255,0.18);
-    }
-    .fm-stage-item {
-      position: relative;
-      padding-left: 1.75rem;
-      opacity: 0.42;
-      transition: opacity 0.5s ease;
-    }
-    .fm-stage-item.is-active { opacity: 1; }
-    .fm-stage-item::before {
-      content: '+';
-      position: absolute;
-      left: 0;
-      top: -0.45rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.55);
-      line-height: 1;
-    }
-    .fm-stage-item-num {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 0.35rem;
-    }
-    .fm-stage-item-tag {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      color: #fff;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
     /* Stage scroll-cue (only visible at the very start) */
     .fm-scroll-cue {
       position: absolute;
@@ -854,28 +795,6 @@
       margin: 0;
     }
     .hero-welcome.is-hidden { opacity: 0; }
-    .hero-trust {
-      text-align: center;
-      max-width: clamp(220px, min(28vw, 47vh), 420px);
-      padding: clamp(0.5rem, min(0.85vw, 1.4vh), 1.25rem) 0;
-    }
-    .hero-trust-quote {
-      display: block;
-      font-family: 'Montserrat', sans-serif;
-      font-style: italic;
-      font-size: clamp(0.68rem, min(0.63vw, 1.05vh), 0.95rem);
-      line-height: 1.6;
-      color: #fff;
-    }
-    .hero-trust-attr {
-      display: block;
-      margin-top: 0.4rem;
-      font-size: clamp(0.5rem, min(0.47vw, 0.78vh), 0.7rem);
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(248,189,206,0.5);
-    }
 
     /* Panels 1-3,paired topic cards flanking the logo */
     .fm-panel-pair { padding: 0 clamp(2rem, 6vw, 6rem); }
@@ -987,7 +906,7 @@
     @media (max-width: 900px) {
       .fm-cinema-hero { height: auto; }
       .fm-cinema-stage { position: relative; height: auto; min-height: 100vh; padding: 6rem 1.5rem 4rem; }
-      .fm-stage-rail, .fm-scroll-cue { display: none; }
+      .fm-scroll-cue { display: none; }
       .fm-logo-stage {
         position: relative;
         transform: none;
@@ -1036,6 +955,7 @@
     }
     .about-inner { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.1fr; gap: 7rem; align-items: center; }
     .about-mark-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+    .about-brain-img { width: 100%; max-width: 420px; height: auto; display: block; }
     .about-mark-halo { display: none; }
     .paint-bg-svg { position: absolute; width: 370px; height: 370px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; z-index: 0; overflow: visible; }
     .about-mark-canvas { position: relative; z-index: 1; display: block; }
@@ -1088,80 +1008,6 @@
     @media (max-width: 860px) {
       .about-quote { padding: 5rem 1.5rem 6rem; }
       .about-quote-cols { grid-template-columns: 1fr; gap: 1.9rem; }
-    }
-
-    /* ══ CIRCULAR REVEAL HEADING ══ */
-    .crh-inner {
-      position: relative;
-      width: 390px;
-      height: 390px;
-      border-radius: 50%;
-      background: #f5ede8;
-      box-shadow: 16px 16px 32px rgba(91,12,23,0.12), -16px -16px 32px #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: crh-float 5s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    .crh-ring-1 {
-      position: absolute;
-      inset: 18px;
-      border-radius: 50%;
-      box-shadow: inset 6px 6px 12px rgba(91,12,23,0.09), inset -6px -6px 12px rgba(255,255,255,0.85);
-      pointer-events: none;
-    }
-    .crh-ring-2 {
-      position: absolute;
-      inset: 36px;
-      border-radius: 50%;
-      box-shadow: inset 4px 4px 8px rgba(91,12,23,0.07), inset -4px -4px 8px rgba(255,255,255,0.7);
-      pointer-events: none;
-    }
-    .crh-center {
-      position: relative;
-      z-index: 2;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: opacity 0.3s ease;
-      overflow: hidden;
-    }
-    .crh-center img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .crh-svg-ring {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      animation: crh-rotate 30s linear infinite;
-      pointer-events: none;
-      z-index: 4;
-    }
-    .crh-text-segment {
-      pointer-events: all;
-      cursor: pointer;
-    }
-    .crh-text-segment text {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      fill: url(#crh-text-gradient);
-    }
-    @keyframes crh-float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-    @keyframes crh-rotate {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
     }
 
     /* PILLARS */
@@ -1574,6 +1420,8 @@
       from { transform: translateY(0); }
       to   { transform: translateY(-50%); }
     }
+    /* Pause only the hovered column's upward scroll; siblings keep moving. */
+    .tscroll-col:hover .tscroll-track { animation-play-state: paused; }
     .tscroll-card {
       background: #fff;
       border: 1px solid rgba(91,12,23,0.09);
@@ -1614,7 +1462,9 @@
       color: var(--cream);
       display: flex; align-items: center; justify-content: center;
       font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.03em;
+      overflow: hidden;
     }
+    .tscroll-card-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
     .tscroll-card-name { font-size: 0.98rem; font-weight: 600; color: var(--bordeaux); line-height: 1; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
     .tscroll-card-role { font-size: 0.78rem; font-weight: 300; color: rgba(91,12,23,0.80); letter-spacing: 0.04em; }
 
@@ -1895,88 +1745,6 @@
       inset: 0;
       background: linear-gradient(to top, rgba(61,8,16,0.6), transparent 60%);
     }
-
-    /* ═══ FREEDOM HUB ═══ */
-    .freedom-hub {
-      height: 100vh;
-      max-height: 100vh;
-      background: var(--beige);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: stretch;
-      padding-top: 5rem;
-      overflow: hidden;
-    }
-    .freedom-hub-image {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 50% 45%, var(--bordeaux-mid) 0%, var(--bordeaux) 48%, var(--bordeaux-deep) 100%);
-    }
-    .freedom-hub-image::before {
-      content: '';
-      position: absolute;
-      width: 60%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(248,189,206,0.30) 0%, rgba(248,189,206,0) 65%);
-      filter: blur(12px);
-      animation: fhGlow 6s ease-in-out infinite;
-    }
-    .freedom-hub-image img {
-      position: relative;
-      width: auto;
-      height: auto;
-      max-width: 64%;
-      max-height: 64%;
-      object-fit: contain;
-      animation: fhFloat 7s ease-in-out infinite;
-      filter: drop-shadow(0 22px 50px rgba(0,0,0,0.38));
-    }
-    @keyframes fhFloat { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-16px) rotate(1deg); } }
-    @keyframes fhGlow { 0%,100% { opacity: .65; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
-    .freedom-hub-content {
-      padding: 8rem 5rem 5rem 5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      background: var(--beige);
-    }
-    .freedom-hub-h2 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      font-weight: 500;
-      line-height: 1.18;
-      color: var(--bordeaux);
-      letter-spacing: -0.025em;
-      margin-bottom: 3rem;
-    }
-    .freedom-links { display: flex; flex-direction: column; gap: 1rem; }
-    .freedom-link-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 1.75rem;
-      background: var(--pink);
-      color: var(--bordeaux);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      border: none;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      transition: background 0.25s ease, transform 0.2s ease;
-      width: 100%;
-      text-align: left;
-    }
-    .freedom-link-btn:hover { background: var(--pink-mid); transform: translateX(4px); }
-    .freedom-link-btn:focus-visible { outline: 2px solid var(--bordeaux); outline-offset: 3px; }
-    .freedom-link-arrow { font-size: 1rem; }
 
     /* ═══ ONE-ON-ONE & TEAM COACHING ═══ */
     .service-intro {
@@ -2326,9 +2094,6 @@
       .page-hero { grid-template-columns: 1fr; }
       .page-hero-image { display: none; }
       #page-one-on-one .page-hero-content { grid-column: auto; }
-      .freedom-hub { grid-template-columns: 1fr; }
-      .freedom-hub-image { display: none; }
-      .freedom-hub-content { padding: 8rem 1.5rem 5rem; }
       .service-intro-inner { grid-template-columns: 1fr; gap: 3rem; }
       .about-dark-inner { grid-template-columns: 1fr; gap: 3rem; }
       .contact-hero { grid-template-columns: 1fr; }
@@ -3262,26 +3027,6 @@
         <div class="fm-mesh fm-mesh-2"></div>
         <div class="fm-mesh fm-mesh-3"></div>
 
-        <!-- Stage rail (left edge) -->
-        <div class="fm-stage-rail" id="fm-stage-rail">
-          <div class="fm-stage-item is-active" data-stage="0">
-            <div class="fm-stage-item-num">01</div>
-            <div class="fm-stage-item-tag">Welcome</div>
-          </div>
-          <div class="fm-stage-item" data-stage="1">
-            <div class="fm-stage-item-num">02</div>
-            <div class="fm-stage-item-tag">Inner Self</div>
-          </div>
-          <div class="fm-stage-item" data-stage="2">
-            <div class="fm-stage-item-num">03</div>
-            <div class="fm-stage-item-tag">Daily Flow</div>
-          </div>
-          <div class="fm-stage-item" data-stage="3">
-            <div class="fm-stage-item-num">04</div>
-            <div class="fm-stage-item-tag">Take Flight</div>
-          </div>
-        </div>
-
         <!-- Full-stage 3D canvas (desktop). Sibling of the PNG wrapper so it can render edge-to-edge. -->
         <canvas class="fm-3d-layer" id="fm-3d-canvas" aria-label="Freedomind logo 3D"></canvas>
 
@@ -3293,10 +3038,6 @@
         <!-- Panel 0: Brand intro -->
         <div class="fm-panel fm-panel-intro is-active" id="fm-panel-0">
           <div class="intro-eyebrow">Soulful <span style="opacity:.55">·</span> Strong <span style="opacity:.55">·</span> Strategic</div>
-          <div class="hero-trust">
-            <span class="hero-trust-quote">"A life-changing experience, I feel stronger, clearer, and more aligned than ever."</span>
-            <span class="hero-trust-attr">Sarah M. - Coaching Client</span>
-          </div>
           <p class="intro-sub">Empowering minds, in an unconventional way. A pinned conversation between motion, mind, and meaning.</p>
           <div class="intro-ctas">
             <button class="btn-primary" onclick="showPage('contact')">Work With Christine</button>
@@ -3392,37 +3133,8 @@
     <section class="about" id="about-preview">
       <div class="about-inner">
         <div class="about-mark-wrap reveal">
-          <div class="crh-inner" id="crh-about">
-            <div class="crh-ring-1"></div>
-            <div class="crh-ring-2"></div>
-            <div class="crh-center" id="crh-center-about">
-              <img src="brand_assets/freedomind logo without m Background Removed.webp"
-                   alt="Freedomind" loading="lazy">
-            </div>
-            <svg class="crh-svg-ring" viewBox="0 0 400 400"
-                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <defs>
-                <path id="crh-circle-path"
-                      d="M 200,40 A 160,160 0 1,1 199.999,40"/>
-                <linearGradient id="crh-text-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%"   stop-color="#e61e2e"/>
-                  <stop offset="100%" stop-color="#5b0c17"/>
-                </linearGradient>
-              </defs>
-              <g class="crh-text-segment" data-crh-index="0">
-                <text><textPath href="#crh-circle-path" startOffset="2%">·  COACHING</textPath></text>
-              </g>
-              <g class="crh-text-segment" data-crh-index="1">
-                <text><textPath href="#crh-circle-path" startOffset="27%">·  SPEAKING</textPath></text>
-              </g>
-              <g class="crh-text-segment" data-crh-index="2">
-                <text><textPath href="#crh-circle-path" startOffset="52%">·  TRAINING</textPath></text>
-              </g>
-              <g class="crh-text-segment" data-crh-index="3">
-                <text><textPath href="#crh-circle-path" startOffset="77%">·  GROWTH</textPath></text>
-              </g>
-            </svg>
-          </div>
+          <img class="about-brain-img" src="brand_assets/freedomind-brain.webp"
+               alt="Freedomind thinking brain mascot" loading="lazy">
         </div>
         <div class="reveal" style="transition-delay:.15s">
           <div class="section-label">About Freedomind</div>
@@ -3452,14 +3164,14 @@
             </div>
           </div>
           <div class="pillar-card reveal-left" style="transition-delay:.15s" onclick="showPage('team-coaching')">
-            <div class="pillar-card-bg" style="background-image: url('brand_assets/corporate-workshops.webp'); background-position: center 30%;"></div>
+            <div class="pillar-card-bg" style="background-image: url('brand_assets/workshops-networking.webp'); background-position: center 30%;"></div>
             <div class="pillar-card-overlay"></div>
             <div class="pillar-content">
               <h3 class="pillar-title">Corporate Workshops &amp; Training</h3>
             </div>
           </div>
           <div class="pillar-card reveal-left" style="transition-delay:.30s" onclick="showPage('speaking')">
-            <div class="pillar-card-bg" style="background-image: url('brand_assets/2024-11-29-Rozina-Garage-Women-Entrepreneurial-Bootcamp-San-Gwann-51-840x1176.webp')"></div>
+            <div class="pillar-card-bg" style="background-image: url('brand_assets/corporate-workshops.webp'); background-position: center 30%;"></div>
             <div class="pillar-card-overlay"></div>
             <div class="pillar-content">
               <h3 class="pillar-title">Speaking &amp; Keynotes</h3>
@@ -3587,7 +3299,7 @@
       <div class="testimonials-inner">
         <div class="testimonials-header reveal">
           <div class="section-label" style="display:inline-block;">Straight From The Source</div>
-          <h2 class="testimonials-h2">Here Is What These Amazing Trailblazers Have To Say</h2>
+          <h2 class="testimonials-h2">Here Is What Some Amazing People Said</h2>
         </div>
 
         <!-- Animated scrolling columns -->
@@ -3595,6 +3307,20 @@
 
           <div class="tscroll-col">
             <div class="tscroll-track" style="--tdur:20s">
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
+                </div>
+              </div>
               <div class="tscroll-card">
                 <p class="tscroll-card-text">“One of the most engaging wellbeing sessions I’ve joined in a while, interactive and practical, with real tools and small shifts people can actually take into everyday life. I’d recommend Christine’s workshop to anyone.”</p>
                 <div class="tscroll-card-author">
@@ -3621,6 +3347,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">DF</div>
                   <div><div class="tscroll-card-name">Donna Falzon</div><div class="tscroll-card-role">Head of Third Party Management, HSBC Malta</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -3657,6 +3397,20 @@
           <div class="tscroll-col tscroll-col--mid">
             <div class="tscroll-track" style="--tdur:26s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine didn’t just make my idea happen, she grew it into something bigger than I ever expected. She creates a safe, engaging space where real growth happens, and she doesn’t just talk about change, she inspires it.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">OB</div>
@@ -3682,6 +3436,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">PG</div>
                   <div><div class="tscroll-card-name">Puneet Gupta</div><div class="tscroll-card-role">SVP, Operations & Transformation Leader</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -3718,6 +3486,20 @@
           <div class="tscroll-col tscroll-col--last">
             <div class="tscroll-track" style="--tdur:23s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -3729,13 +3511,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -3746,6 +3521,20 @@
                 </div>
               </div>
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -3757,13 +3546,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -3915,7 +3697,7 @@
       <div class="testimonials-inner">
         <div class="testimonials-header reveal">
           <div class="section-label" style="display:inline-block;">Trailblazers Speak</div>
-          <h2 class="testimonials-h2">Here Is What These Amazing Trailblazers Have To Say</h2>
+          <h2 class="testimonials-h2">Here Is What Some Amazing People Said</h2>
         </div>
 
         <!-- Animated scrolling columns -->
@@ -3923,6 +3705,20 @@
 
           <div class="tscroll-col">
             <div class="tscroll-track" style="--tdur:20s">
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
+                </div>
+              </div>
               <div class="tscroll-card">
                 <p class="tscroll-card-text">“One of the most engaging wellbeing sessions I’ve joined in a while, interactive and practical, with real tools and small shifts people can actually take into everyday life. I’d recommend Christine’s workshop to anyone.”</p>
                 <div class="tscroll-card-author">
@@ -3949,6 +3745,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">DF</div>
                   <div><div class="tscroll-card-name">Donna Falzon</div><div class="tscroll-card-role">Head of Third Party Management, HSBC Malta</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -3985,6 +3795,20 @@
           <div class="tscroll-col tscroll-col--mid">
             <div class="tscroll-track" style="--tdur:26s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine didn’t just make my idea happen, she grew it into something bigger than I ever expected. She creates a safe, engaging space where real growth happens, and she doesn’t just talk about change, she inspires it.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">OB</div>
@@ -4010,6 +3834,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">PG</div>
                   <div><div class="tscroll-card-name">Puneet Gupta</div><div class="tscroll-card-role">SVP, Operations & Transformation Leader</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4046,6 +3884,20 @@
           <div class="tscroll-col tscroll-col--last">
             <div class="tscroll-track" style="--tdur:23s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4057,13 +3909,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4074,6 +3919,20 @@
                 </div>
               </div>
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4085,13 +3944,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4365,7 +4217,7 @@
       <div class="testimonials-inner">
         <div class="testimonials-header reveal">
           <div class="section-label" style="display:inline-block;">Trailblazers Speak</div>
-          <h2 class="testimonials-h2">Here Is What These Amazing Trailblazers Have To Say</h2>
+          <h2 class="testimonials-h2">Here Is What Some Amazing People Said</h2>
         </div>
 
         <!-- Animated scrolling columns -->
@@ -4373,6 +4225,20 @@
 
           <div class="tscroll-col">
             <div class="tscroll-track" style="--tdur:20s">
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
+                </div>
+              </div>
               <div class="tscroll-card">
                 <p class="tscroll-card-text">“One of the most engaging wellbeing sessions I’ve joined in a while, interactive and practical, with real tools and small shifts people can actually take into everyday life. I’d recommend Christine’s workshop to anyone.”</p>
                 <div class="tscroll-card-author">
@@ -4399,6 +4265,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">DF</div>
                   <div><div class="tscroll-card-name">Donna Falzon</div><div class="tscroll-card-role">Head of Third Party Management, HSBC Malta</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4435,6 +4315,20 @@
           <div class="tscroll-col tscroll-col--mid">
             <div class="tscroll-track" style="--tdur:26s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine didn’t just make my idea happen, she grew it into something bigger than I ever expected. She creates a safe, engaging space where real growth happens, and she doesn’t just talk about change, she inspires it.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">OB</div>
@@ -4460,6 +4354,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">PG</div>
                   <div><div class="tscroll-card-name">Puneet Gupta</div><div class="tscroll-card-role">SVP, Operations & Transformation Leader</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4496,6 +4404,20 @@
           <div class="tscroll-col tscroll-col--last">
             <div class="tscroll-track" style="--tdur:23s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4507,13 +4429,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4524,6 +4439,20 @@
                 </div>
               </div>
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4535,13 +4464,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4687,7 +4609,7 @@
       <div class="testimonials-inner">
         <div class="testimonials-header reveal">
           <div class="section-label" style="display:inline-block;">Trailblazers Speak</div>
-          <h2 class="testimonials-h2">Here Is What These Amazing Trailblazers Have To Say</h2>
+          <h2 class="testimonials-h2">Here Is What Some Amazing People Said</h2>
         </div>
 
         <!-- Animated scrolling columns -->
@@ -4695,6 +4617,20 @@
 
           <div class="tscroll-col">
             <div class="tscroll-track" style="--tdur:20s">
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
+                </div>
+              </div>
               <div class="tscroll-card">
                 <p class="tscroll-card-text">“One of the most engaging wellbeing sessions I’ve joined in a while, interactive and practical, with real tools and small shifts people can actually take into everyday life. I’d recommend Christine’s workshop to anyone.”</p>
                 <div class="tscroll-card-author">
@@ -4721,6 +4657,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">DF</div>
                   <div><div class="tscroll-card-name">Donna Falzon</div><div class="tscroll-card-role">Head of Third Party Management, HSBC Malta</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4757,6 +4707,20 @@
           <div class="tscroll-col tscroll-col--mid">
             <div class="tscroll-track" style="--tdur:26s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine didn’t just make my idea happen, she grew it into something bigger than I ever expected. She creates a safe, engaging space where real growth happens, and she doesn’t just talk about change, she inspires it.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">OB</div>
@@ -4782,6 +4746,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">PG</div>
                   <div><div class="tscroll-card-name">Puneet Gupta</div><div class="tscroll-card-role">SVP, Operations & Transformation Leader</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4818,6 +4796,20 @@
           <div class="tscroll-col tscroll-col--last">
             <div class="tscroll-track" style="--tdur:23s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4829,13 +4821,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4846,6 +4831,20 @@
                 </div>
               </div>
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -4857,13 +4856,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -4983,7 +4975,7 @@
       <div class="testimonials-inner">
         <div class="testimonials-header reveal">
           <div class="section-label" style="display:inline-block;">Trailblazers Speak</div>
-          <h2 class="testimonials-h2">Here Is What These Amazing Trailblazers Have To Say</h2>
+          <h2 class="testimonials-h2">Here Is What Some Amazing People Said</h2>
         </div>
 
         <!-- Animated scrolling columns -->
@@ -4991,6 +4983,20 @@
 
           <div class="tscroll-col">
             <div class="tscroll-track" style="--tdur:20s">
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
+                </div>
+              </div>
               <div class="tscroll-card">
                 <p class="tscroll-card-text">“One of the most engaging wellbeing sessions I’ve joined in a while, interactive and practical, with real tools and small shifts people can actually take into everyday life. I’d recommend Christine’s workshop to anyone.”</p>
                 <div class="tscroll-card-author">
@@ -5017,6 +5023,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">DF</div>
                   <div><div class="tscroll-card-name">Donna Falzon</div><div class="tscroll-card-role">Head of Third Party Management, HSBC Malta</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine has profound knowledge regarding the topic and effectively alternates between education and assignments. Her workbook provides the right support during the workshop, but is also something to continue to use afterwards. Christine is an amazing coach. I highly recommend Christine.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lotte-lehman.webp" alt="Lotte Lehman De Lehnsfeld" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lotte Lehman De Lehnsfeld</div><div class="tscroll-card-role">Workshop Attendee</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I have had the privilege of working with Christine for a number of years during our time at HSBC. I can confidently say she is an amazing leader who always fostered a positive and inclusive work culture. She never shies away from any challenges or tough situations; she supports her team to come up with solutions.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-oriette-chandrasekera.webp" alt="Oriette Chandrasekera" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Oriette Chandrasekera</div><div class="tscroll-card-role">Experienced Department Manager</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -5053,6 +5073,20 @@
           <div class="tscroll-col tscroll-col--mid">
             <div class="tscroll-track" style="--tdur:26s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine didn’t just make my idea happen, she grew it into something bigger than I ever expected. She creates a safe, engaging space where real growth happens, and she doesn’t just talk about change, she inspires it.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">OB</div>
@@ -5078,6 +5112,20 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">PG</div>
                   <div><div class="tscroll-card-name">Puneet Gupta</div><div class="tscroll-card-role">SVP, Operations & Transformation Leader</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“In May 2024, I decided to trust Christine as my Mind Coach, and it was the best decision of my life. By early August 2024, I had secured my dream job, improved my mental health, lost weight effortlessly, enhanced my relationships, stepped out of my comfort zone, quit non-serving habits, and found true happiness!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-stefania-gauci.webp" alt="Stefania Gauci" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Stefania Gauci</div><div class="tscroll-card-role">Mind Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“I attended Christine’s ‘Freedom from Time’ group workshop and was blown away! Before, I used to fill my whole calendar with ‘perfect’ tasks to do to keep me productive, while not doing them anyway. This changed immediately after.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-leonard-v.webp" alt="Leonard V." loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Leonard V.</div><div class="tscroll-card-role">Purpose Coach</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -5114,6 +5162,20 @@
           <div class="tscroll-col tscroll-col--last">
             <div class="tscroll-track" style="--tdur:23s">
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -5125,13 +5187,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
@@ -5142,6 +5197,20 @@
                 </div>
               </div>
               <div class="tscroll-card">
+                <p class="tscroll-card-text">“I’ve noticed a significant improvement in my focus and performance, thanks to the practical tools and techniques I learned in the workshop. The coaching sessions that followed were the perfect addition, creating a great space for learning and growth.”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-barbara-conti.webp" alt="Barbara Conti" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Barbara Conti</div><div class="tscroll-card-role">Workshop &amp; Coaching Client</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
+                <p class="tscroll-card-text">“Christine is an excellent trainer and coach. I am grateful for the opportunity to participate in her ‘Freedom from Time’ workshop. Three hours of full immersion in the awareness of daily actions made me realize that even within 24 hours, you can find 48!”</p>
+                <div class="tscroll-card-author">
+                  <div class="tscroll-card-avatar"><img src="brand_assets/trailblazer-lidia-jaubert.webp" alt="Lidia Jaubert" loading="lazy" decoding="async"></div>
+                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Group</div></div>
+                </div>
+              </div>
+              <div class="tscroll-card">
                 <p class="tscroll-card-text">“Christine helped deliver a webinar on Work-Life Balance and was amazing to work with, seamless, supportive and genuinely valuable. Her passion for people and ability to create impactful experiences are second to none.”</p>
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">AS</div>
@@ -5153,13 +5222,6 @@
                 <div class="tscroll-card-author">
                   <div class="tscroll-card-avatar">GB</div>
                   <div><div class="tscroll-card-name">Grant Booth</div><div class="tscroll-card-role">Regulatory Compliance Advisor</div></div>
-                </div>
-              </div>
-              <div class="tscroll-card">
-                <p class="tscroll-card-text">“Three hours of full immersion in the awareness of daily actions made me realise that even within 24 hours, you can find 48! Practical tools you can apply immediately, especially useful in the corporate world.”</p>
-                <div class="tscroll-card-author">
-                  <div class="tscroll-card-avatar">LJ</div>
-                  <div><div class="tscroll-card-name">Lidia Jaubert</div><div class="tscroll-card-role">Head of Cloud Department, Softline Group</div></div>
                 </div>
               </div>
               <div class="tscroll-card">
